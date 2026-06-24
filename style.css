@@ -1,5 +1,5 @@
 /* ==========================================================================
-   THEME PALETTE (Metallic Chromes, Deep Slates & Sky Bio-Glow)
+   THEME CONFIGURATION & BASE RESET
    ========================================================================== */
 * {
     margin: 0;
@@ -9,11 +9,10 @@
 }
 
 :root {
-    --chrome-slate: #2a3439; /* Dark metallic tone matching image text */
-    --sky-glow: #0ea5e9;     /* Deep rich cyan bubble tint */
-    --sky-mist: #e0f2fe;     /* Bright fresh sky background element */
+    --chrome-slate: #20272b; /* Deep metallic grey directly from image text */
+    --sky-glow: #0ea5e9;     /* Vibrant bubble blue */
+    --sky-mist: #e0f2fe;     /* Light soft backdrop */
     --foam-white: #ffffff;
-    --glass-shimmer: rgba(255, 255, 255, 0.45);
     --border-glass: rgba(14, 165, 233, 0.25);
 }
 
@@ -26,39 +25,42 @@ body {
 }
 
 /* ==========================================================================
-   HIGH-END CHROMATIC METALLIC LOGO RECREATION
+   IMAGE-EXACT 3D CHROMATIC LOGO DESIGN
    ========================================================================== */
-.logo-wrapper {
+.logo-container-art {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-.logo-stylish {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 2.6rem;
-    font-weight: 600;
-    background: linear-gradient(180deg, #576574 0%, var(--chrome-slate) 100%);
+.brand-title {
+    font-family: 'Playball', cursive;
+    font-size: 3.5rem;
+    font-weight: 400;
+    /* Multilayer chrome gradient imitating the image artwork */
+    background: linear-gradient(180deg, #708090 0%, #2c3e50 45%, #111b24 100%);
     -webkit-background-clip: text;
-    background-clip: text; /* <-- Añade esta línea estándar aquí */
+    background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0px 3px 2px rgba(0,0,0,0.15));
-    letter-spacing: -1px;
+    /* Soft drop shadow for 3D lifting effect */
+    filter: drop-shadow(0px 4px 3px rgba(0,0,0,0.2));
+    line-height: 1;
 }
 
-.logo-sub {
+.brand-tag {
     font-size: 0.75rem;
     font-weight: 700;
-    letter-spacing: 4px;
+    letter-spacing: 4.5px;
     color: var(--chrome-slate);
-    margin-top: -8px;
-    opacity: 0.9;
+    margin-top: -2px;
+    padding-left: 4px;
+    opacity: 0.95;
 }
 
 /* ==========================================================================
-   3D BUBBLE AMBIENT LAYER
+   3D PAWS & SCISSORS BACKGROUND PATTERN ENGINE
    ========================================================================== */
-.bubble-ambient {
+.ambient-layer {
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -68,36 +70,40 @@ body {
     pointer-events: none;
 }
 
-.bubble-glow {
+.floating-icon {
     position: absolute;
     bottom: -150px;
-    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7) 0%, rgba(14,165,233,0.2) 60%, rgba(14,165,233,0.4) 100%);
-    border: 1px solid rgba(255,255,255,0.6);
-    border-radius: 50%;
-    box-shadow: 0 10px 25px rgba(14,165,233,0.15), inset -5px -5px 15px rgba(14,165,233,0.3);
-    animation: bubbleRise 16s infinite linear;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.12; /* Keeps background elegant and non-distracting */
+    animation: iconFloatRise 18s infinite linear;
 }
 
-.bubble-glow:nth-child(1) { width: 120px; height: 120px; left: 8%; animation-duration: 11s; }
-.bubble-glow:nth-child(2) { width: 70px; height: 70px; left: 40%; animation-duration: 15s; animation-delay: 2s; }
-.bubble-glow:nth-child(3) { width: 160px; height: 160px; left: 75%; animation-duration: 19s; animation-delay: 1s; }
-.bubble-glow:nth-child(4) { width: 90px; height: 90px; left: 90%; animation-duration: 13s; }
+/* Base64 procedural SVG icons to ensure zero external loading lag */
+.floating-icon.paw {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230ea5e9'%3E%3Cpath d='M12 14c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zm-4.5-2c-.83 0-1.5-.67-1.5-1.5S6.67 9 7.5 9s1.5.67 1.5 1.5S8.33 12 7.5 12zm9 0c-.83 0-1.5-.67-1.5-1.5S15.67 9 16.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm-7.75-5C8.14 7 7.5 6.36 7.5 5.5S8.14 4 8.75 4s1.25.64 1.25 1.5S9.36 7 8.75 7zm6.5 0c-.61 0-1.25-.64-1.25-1.5S14.64 4 15.25 4s1.25 1.36 1.25 2.5S15.86 7 15.25 7z'/%3E%3C/svg%3E");
+}
 
-@keyframes bubbleRise {
-    0% { transform: translateY(0) scale(0.9) rotate(0deg); opacity: 0; }
-    15% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { transform: translateY(-125vh) scale(1.1) rotate(35deg); opacity: 0; }
+.floating-icon.scissor {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2320272b'%3E%3Cpath d='M19 3c-1.1 0-2 .9-2 2v1.28l-3.35 3.34L10.31 6.3c.43-.63.69-1.38.69-2.2 0-2.2-1.8-4-4-4S3 1.9 3 4s1.8 4 4 4c.82 0 1.57-.26 2.2-.69l3.32 3.32L9.2 13.97c-.63-.43-1.38-.69-2.2-.69-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4c0-.82-.26-1.57-.69-2.2l3.32-3.32 5.03 5.03c.19.19.45.29.71.29.26 0 .51-.1.71-.29.39-.39.39-1.02 0-1.41l-5.03-5.03 3.35-3.35H19c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-12 3c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm12-11h-1.28l1.64-1.64c.2-.2.2-.51 0-.71s-.51-.2-.71 0L15.28 7H14V5.72l1.64-1.64c.2-.2.2-.51 0-.71s-.51-.2-.71 0L13.28 5V3.72c0-.39-.31-.72-.7-.72s-.7.33-.7.72V5h-1.28L8.68 3.36c-.2-.2-.51-.2-.71 0s-.2.51 0 .71l1.64 1.64H8.34L6.7 4.1c-.2-.2-.51-.2-.71 0s-.2.51 0 .71l1.64 1.64h1.28v1.28l-1.64 1.64c-.2.2-.2.51 0 .71.1.1.23.15.35.15s.25-.05.35-.15l1.64-1.64h1.28v1.28l-1.64 1.64c-.2.2-.2.51 0 .71.1.1.23.15.35.15s.25-.05.35-.15l1.64-1.64h1.28v1.28c0 .39.31.72.7.72s.7-.33.7-.72V10h1.28l1.64 1.64c.1.1.23.15.35.15s.25-.05.35-.15c.2-.2.2-.51 0-.71L15.28 9H14V7.72l1.64-1.64c.2-.2.2-.51 0-.71s-.51-.2-.71 0L13.28 7H12.02v1.28l1.64 1.64c.2.2.2.51 0 .71-.1.1-.23.15-.35.15s-.25-.05-.35-.15L11.32 9H10.04L8.4 10.64c-.2.2-.2.51 0 .71.1.1.23.15.35.15s.25-.05.35-.15l1.64-1.64h1.28v1.28l-1.64 1.64c-.2.2-.2.51 0 .71.1.1.23.15.35.15s.25-.05.35-.15l1.64-1.64h1.28v1.28c0 .39.31.72.7.72s.7-.33.7-.72V12h1.28l1.64-1.64c.2-.2.2-.51 0-.71s-.51-.2-.71 0L15.28 11H14V9.72l1.64-1.64c.2-.2.2-.51 0-.71s-.51-.2-.71 0l-1.65 1.63z'/%3E%3C/svg%3E");
+}
+
+@keyframes iconFloatRise {
+    0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.12; }
+    90% { opacity: 0.12; }
+    100% { transform: translateY(-120vh) scale(1.1) rotate(45deg); opacity: 0; }
 }
 
 /* ==========================================================================
-   NAVBAR & MODERN NETWORKS
+   NAVBAR & EXTERNAL SOCIAL PILLS
    ========================================================================== */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 5rem;
+    padding: 1rem 5rem;
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(255,255,255,0.4);
@@ -132,11 +138,11 @@ body {
 }
 
 /* ==========================================================================
-   AI SERVICES LAYOUT (Cards with Depth Blur)
+   LAYOUT CONTAINERS & SERVICE CARDS
    ========================================================================== */
 .main-wrapper {
     max-width: 1200px;
-    margin: 4rem auto;
+    margin: 3rem auto;
     padding: 0 2rem;
 }
 
@@ -144,15 +150,15 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
-    margin-bottom: 5rem;
+    margin-bottom: 4rem;
 }
 
 .service-card {
     background: var(--foam-white);
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    border: 1px solid rgba(255,255,255,0.7);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     text-align: center;
 }
@@ -161,7 +167,6 @@ body {
     width: 100%;
     height: 220px;
     object-fit: cover;
-    filter: saturate(1.1);
     transition: transform 0.5s ease;
 }
 
@@ -173,16 +178,16 @@ body {
 }
 
 .service-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-6px);
     box-shadow: 0 15px 35px rgba(14, 165, 233, 0.15);
 }
 
 .service-card:hover img {
-    transform: scale(1.05);
+    transform: scale(1.04);
 }
 
 /* ==========================================================================
-   GLASSMORPHISM STEPPED FORM ENGINE
+   GLASSMORPHISM STEPPED APPLICATION SYSTEM
    ========================================================================== */
 .glass-form-container {
     background: rgba(255, 255, 255, 0.45);
@@ -190,13 +195,13 @@ body {
     border: 1px solid var(--border-glass);
     border-radius: 32px;
     padding: 4rem;
-    box-shadow: 0 20px 50px rgba(14, 165, 233, 0.1);
+    box-shadow: 0 20px 50px rgba(14, 165, 233, 0.08);
 }
 
 .stepper-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 4rem;
+    margin-bottom: 3.5rem;
     border-bottom: 2px solid rgba(14, 165, 233, 0.1);
     padding-bottom: 1.2rem;
 }
@@ -218,7 +223,7 @@ body {
 .form-step.step-active { display: block; animation: smoothReveal 0.4s ease-out forwards; }
 
 @keyframes smoothReveal {
-    from { opacity: 0; transform: translateY(15px); }
+    from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -228,11 +233,8 @@ body {
     color: var(--chrome-slate);
 }
 
-/* HIGH-END NEOMORPHIC INPUT FIELDS */
-.input-field {
-    margin-bottom: 2rem;
-}
-
+/* INPUT FORM ELEMENTS */
+.input-field { margin-bottom: 2rem; }
 .input-field label {
     display: block;
     font-size: 0.85rem;
@@ -250,7 +252,6 @@ body {
     background: var(--foam-white);
     font-size: 1rem;
     color: var(--chrome-slate);
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
     transition: all 0.3s ease;
 }
 
@@ -266,7 +267,7 @@ body {
     gap: 2rem;
 }
 
-/* PREMIUM RADIO DESIGN INTERACTION */
+/* CUSTOM INTERACTIVE RADIO TILE GROUP */
 .custom-tile-group {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -284,19 +285,18 @@ body {
     font-weight: 600;
     text-align: center;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
 }
 
 .tile-option input:checked + .tile-design {
     background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
     color: var(--foam-white);
     border-color: transparent;
-    box-shadow: 0 10px 25px rgba(14, 165, 233, 0.35);
-    transform: scale(1.03);
+    box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
+    transform: scale(1.02);
 }
 
 /* ==========================================================================
-   HIGH-GLOSS GLOW BUTTON ENGINE
+   NAVIGATION ENGINE ACTION BUTTONS
    ========================================================================== */
 .navigation-group {
     display: flex;
@@ -319,14 +319,14 @@ body {
     background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
     color: var(--foam-white);
     width: 100%;
-    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3);
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.25);
 }
 
 .btn-finalize {
     background: linear-gradient(135deg, var(--chrome-slate) 0%, #1e293b 100%);
     color: var(--foam-white);
     flex-grow: 1;
-    box-shadow: 0 8px 25px rgba(42, 52, 57, 0.25);
+    box-shadow: 0 8px 25px rgba(42, 52, 57, 0.2);
 }
 
 .btn-secondary {
@@ -335,14 +335,12 @@ body {
     border: 1px solid rgba(0,0,0,0.05);
 }
 
-.btn-glow-action:hover, .btn-finalize:hover {
-    transform: translateY(-4px);
-}
-.btn-glow-action:hover { box-shadow: 0 12px 30px rgba(14, 165, 233, 0.5); }
-.btn-finalize:hover { box-shadow: 0 12px 30px rgba(42, 52, 57, 0.4); }
+.btn-glow-action:hover, .btn-finalize:hover { transform: translateY(-3px); }
+.btn-glow-action:hover { box-shadow: 0 12px 30px rgba(14, 165, 233, 0.45); }
+.btn-finalize:hover { box-shadow: 0 12px 30px rgba(42, 52, 57, 0.35); }
 
 /* ==========================================================================
-   MOBILE SCALING MEDIA QUERIES
+   RESPONSIVE DESIGN INTERFACE MEDIA QUERIES
    ========================================================================== */
 @media (max-width: 900px) {
     .navbar { flex-direction: column; padding: 2rem; gap: 1.5rem; }

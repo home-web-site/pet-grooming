@@ -1,0 +1,356 @@
+/* ==========================================================================
+   CONFIGURACIÓN GENERAL Y PALETA AZUL CIELO / BLANCO
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --sky-blue-light: #e0f2fe;
+    --sky-blue-main: #7bc8f6;
+    --sky-blue-dark: #1d4ed8;
+    --clean-white: #ffffff;
+    --soft-gray: #f8fafc;
+    --text-dark: #334155;
+}
+
+body {
+    background-color: var(--sky-blue-light);
+    color: var(--text-dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ==========================================================================
+   EFECTO SURREALISTA: BURBUJAS DE BAÑO FLOTANTES
+   ========================================================================== */
+.bubble-container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.bubble {
+    position: absolute;
+    bottom: -100px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(123, 200, 246, 0.3);
+    border-radius: 50%;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.8);
+    animation: floatBubbles 12s infinite linear;
+}
+
+/* Tamaños y posiciones variadas para las burbujas */
+.bubble:nth-child(1) { width: 40px; height: 40px; left: 10%; animation-duration: 8s; }
+.bubble:nth-child(2) { width: 80px; height: 80px; left: 25%; animation-duration: 14s; animation-delay: 2s; }
+.bubble:nth-child(3) { width: 30px; height: 30px; left: 45%; animation-duration: 10s; animation-delay: 1s; }
+.bubble:nth-child(4) { width: 60px; height: 60px; left: 70%; animation-duration: 12s; }
+.bubble:nth-child(5) { width: 90px; height: 90px; left: 85%; animation-duration: 16s; animation-delay: 3s; }
+
+@keyframes floatBubbles {
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+}
+
+/* ==========================================================================
+   HEADER Y REDES SOCIALES
+   ========================================================================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    background-color: var(--clean-white);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--sky-blue-dark);
+}
+
+.italic-brand {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 600;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-btn {
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.social-btn.wa {
+    background-color: #25d366;
+    color: white;
+}
+.social-btn.tt {
+    background-color: #000000;
+    color: white;
+}
+
+.social-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* ==========================================================================
+   SECCIÓN DE CONTENIDO Y ESTRUCTURA DE FORMULARIO
+   ========================================================================== */
+.main-container {
+    max-width: 1000px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+    width: 100%;
+}
+
+.services-summary {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.services-summary h1 {
+    font-size: 2.5rem;
+    color: var(--sky-blue-dark);
+    margin-bottom: 1rem;
+}
+
+.services-summary p {
+    font-size: 1.05rem;
+    opacity: 0.8;
+    max-width: 600px;
+    margin: 0 auto 1.5rem auto;
+}
+
+.badge-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.badge {
+    background: var(--clean-white);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    border: 1px solid var(--sky-blue-light);
+}
+
+/* TARJETA INTERACTIVA DE FORMULARIO */
+.form-card {
+    background-color: var(--clean-white);
+    border-radius: 24px;
+    padding: 3rem;
+    box-shadow: 0 10px 40px rgba(123, 200, 246, 0.15);
+}
+
+/* Indicadores de Pasos */
+.progress-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    border-bottom: 2px solid var(--soft-gray);
+    padding-bottom: 1rem;
+}
+
+.progress-step {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    transition: color 0.3s ease;
+}
+
+.progress-step.active {
+    color: var(--sky-blue-dark);
+    border-bottom: 3px solid var(--sky-blue-dark);
+    padding-bottom: 1rem;
+    margin-bottom: -1.2rem;
+}
+
+/* Estados de visibilidad por paso */
+.form-step {
+    display: none;
+}
+
+.form-step.step-active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.form-step h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--sky-blue-dark);
+}
+
+/* ELEMENTOS DE INPUT Y DISEÑO DE REJILLA */
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.input-group input, .input-group select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--soft-gray);
+    border-radius: 12px;
+    background-color: var(--soft-gray);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus, .input-group select:focus {
+    outline: none;
+    border-color: var(--sky-blue-main);
+    background-color: var(--clean-white);
+}
+
+.grid-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+/* DISEÑO DE CASILLAS MODERNAS PARA SELECCIÓN (BOTONES GRANDES) */
+.radio-tile-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.radio-tile {
+    position: relative;
+    cursor: pointer;
+}
+
+.radio-tile input {
+    position: absolute;
+    opacity: 0;
+}
+
+.tile-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    background-color: var(--soft-gray);
+    border: 2px solid var(--soft-gray);
+    border-radius: 12px;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.radio-tile input:checked + .tile-content {
+    background-color: #f0f9ff;
+    border-color: var(--sky-blue-main);
+    color: var(--sky-blue-dark);
+    transform: scale(1.02);
+}
+
+/* BOTONES DE CONTROL ACCIÓN */
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2.5rem;
+}
+
+.btn-next, .btn-submit, .btn-back {
+    padding: 0.9rem 2rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-next {
+    background-color: var(--sky-blue-dark);
+    color: white;
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.btn-submit {
+    background-color: #b45309; /* Color dorado/marrón sofisticado */
+    color: white;
+    flex-grow: 1;
+}
+
+.btn-back {
+    background-color: var(--soft-gray);
+    color: var(--text-dark);
+}
+
+.btn-next:hover, .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ==========================================================================
+   DISEÑO RESPONSIVO MÓVIL (Celulares)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+
+    .main-container {
+        margin: 1.5rem auto;
+        padding: 0 1rem;
+    }
+
+    .services-summary h1 {
+        font-size: 1.8rem;
+    }
+
+    .form-card {
+        padding: 1.5rem;
+    }
+
+    .grid-inputs, .radio-tile-group {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .btn-group {
+        flex-direction: column-reverse;
+    }
+}

@@ -1,13 +1,271 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pet grooming</title>
+    <title>Stylish Dog Grooming — Registro</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
-    <h1>Welcome to Pet Grooming Services</h1>
-    <p>We provide professional grooming services for your beloved pets. Our experienced groomers ensure
+
+    <div class="bubble-container">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <header class="navbar">
+        <div class="logo"><span class="italic-brand">Stylish</span> Dog Grooming</div>
+        <div class="social-links">
+            <a href="https://wa.me/123456789" target="_blank" class="social-btn wa">WhatsApp</a>
+            <a href="https://tiktok.com/@tu_usuario" target="_blank" class="social-btn tt">TikTok</a>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section class="services-summary">
+            <h1>Consentimiento y Estilo para tus Consentidos</h1>
+            <p>Especialistas en baño, spa y peluquería avanzada para perros y gatos. Dale a tu compañero de vida la experiencia relajante que se merece.</p>
+            <div class="badge-container">
+                <span class="badge">🐾 Spa Canino</span>
+                <span class="badge">🐱 Estética Felina</span>
+                <span class="badge">🧼 Baño de Burbujas</span>
+            </div>
+        </section>
+
+        <section class="form-card">
+            <div class="progress-bar">
+                <div class="progress-step active" id="p1">1. Datos</div>
+                <div class="progress-step" id="p2">2. Tipo de Manto</div>
+                <div class="progress-step" id="p3">3. Estilo</div>
+            </div>
+
+            <form id="groomingForm">
+                <div class="form-step step-active" id="step1">
+                    <h2>Datos de Registro</h2>
+                    <div class="input-group">
+                        <label for="ownerName">Nombre del Propietario</label>
+                        <input type="text" id="ownerName" required placeholder="Ej. Juan Pérez">
+                    </div>
+                    <div class="input-group">
+                        <label for="petName">Nombre de la Mascota</label>
+                        <input type="text" id="petName" required placeholder="Ej. Toby">
+                    </div>
+                    <div class="grid-inputs">
+                        <div class="input-group">
+                            <label for="petAge">Edad de la Mascota</label>
+                            <input type="text" id="petAge" required placeholder="Ej. 3 años">
+                        </div>
+                        <div class="input-group">
+                            <label for="petBreed">Raza</label>
+                            <input type="text" id="petBreed" required placeholder="Ej. Poodle, Persa...">
+                        </div>
+                    </div>
+                    <button type="button" class="btn-next" onclick="changeStep(1, 2)">Siguiente ➜</button>
+                </div>
+
+                <div class="form-step" id="step2">
+                    <h2>Características del Consentido</h2>
+                    <div class="input-group">
+                        <label>Especie</label>
+                        <div class="radio-tile-group">
+                            <label class="radio-tile">
+                                <input type="radio" name="species" value="Perro" checked onclick="updateCuts()">
+                                <div class="tile-content">🐶 Perro</div>
+                            </label>
+                            <label class="radio-tile">
+                                <input type="radio" name="species" value="Gato" onclick="updateCuts()">
+                                <div class="tile-content">🐱 Gato</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Tipo de Pelo</label>
+                        <div class="radio-tile-group">
+                            <label class="radio-tile">
+                                <input type="radio" name="hair" value="Pelo Largo" checked>
+                                <div class="tile-content">☁️ Pelo Largo</div>
+                            </label>
+                            <label class="radio-tile">
+                                <input type="radio" name="hair" value="Pelo Corto">
+                                <div class="tile-content">⚡ Pelo Corto</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn-back" onclick="changeStep(2, 1)">⬅ Atrás</button>
+                        <button type="button" class="btn-next" onclick="changeStep(2, 3)">Siguiente ➜</button>
+                    </div>
+                </div>
+
+                <div class="form-step" id="step3">
+                    <h2>Estilo de Corte</h2>
+                    <p class="step-desc">Elige la opción base (puedes personalizar las especificaciones detalladas con el estilista en tienda).</p>
+                    
+                    <div class="input-group">
+                        <label for="cutStyle">Opciones Disponibles</label>
+                        <select id="cutStyle">
+                            </select>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn-back" onclick="changeStep(3, 2)">⬅ Atrás</button>
+                        <button type="button" class="btn-submit" onclick="generateLocalPDF()">✨ Finalizar y Descargar PDF</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div id="pdf-template" style="display: none;">
+        <div style="padding: 40px; font-family: 'Poppins', sans-serif; color: #333; line-height: 1.6;">
+            <div style="border-bottom: 3px solid #7bc8f6; padding-bottom: 20px; margin-bottom: 30px; text-align: center;">
+                <h1 style="font-family: 'Playfair Display', serif; font-size: 28px; color: #1d4ed8; margin: 0;">
+                    <span style="font-style: italic;">Stylish</span> Dog Grooming
+                </h1>
+                <p style="font-size: 13px; color: #666; margin: 5px 0 0 0;">Resumen del Registro Digital de Estética — 100% Local y Seguro</p>
+            </div>
+            
+            <h3 style="color: #1d4ed8; border-left: 4px solid #7bc8f6; padding-left: 10px; margin-bottom: 20px;">Datos Generales</h3>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; width: 40%;">Propietario:</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee;" id="pdf-owner"></td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Nombre de la Mascota:</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee;" id="pdf-pet"></td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Edad:</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee;" id="pdf-age"></td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Raza:</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee;" id="pdf-breed"></td>
+                </tr>
+            </table>
+
+            <h3 style="color: #1d4ed8; border-left: 4px solid #7bc8f6; padding-left: 10px; margin-bottom: 20px;">Configuración del Servicio</h3>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 40px;">
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; width: 40%;">Especie:</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee;" id="pdf-species"></td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Tipo de Manto:</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee;" id="pdf-hair"></td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Estilo Elegido:</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; color: #b45309;" id="pdf-cut"></td>
+                </tr>
+            </table>
+
+            <div style="background-color: #f0f9ff; border: 1px dashed #7bc8f6; padding: 15px; border-radius: 8px; text-align: center; font-size: 12px; color: #0369a1;">
+                Presenta este documento impreso o digital el día de tu cita. Ningún dato ha sido transmitido o guardado en internet para garantizar tu total privacidad.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Opciones iniciales de cortes (las puedes expandir fácilmente aquí)
+        const cortesMascotas = {
+            "Perro": ["Corte de Raza Estándar", "Corte de Cachorro (Puppy Cut)", "Deslanado + Baño Higiénico", "Corte Asiático (Rostro Redondo)", "Solo Baño Profundo y Cepillado"],
+            "Gato": ["Corte León Clásico", "Corte de Gato de Botas", "Perfilado Higiénico", "Deslanado Premium (Evita bolas de pelo)", "Solo Baño de Burbujas Relajante"]
+        };
+
+        // Actualiza el menú dinámico de cortes según el animal seleccionado
+        function updateCuts() {
+            const species = document.querySelector('input[name="species"]:checked').value;
+            const cutSelect = document.getElementById('cutStyle');
+            cutSelect.innerHTML = "";
+            
+            cortesMascotas[species].forEach(corte => {
+                let opt = document.createElement('option');
+                opt.value = corte;
+                opt.innerHTML = corte;
+                cutSelect.appendChild(opt);
+            });
+        }
+
+        // Ejecutar al cargar la página para definir los primeros cortes
+        updateCuts();
+
+        // Control de navegación entre pasos del formulario
+        function changeStep(current, next) {
+            // Validación básica antes de avanzar del paso 1
+            if (current === 1) {
+                if (!document.getElementById('ownerName').value || !document.getElementById('petName').value || 
+                    !document.getElementById('petAge').value || !document.getElementById('petBreed').value) {
+                    alert('Por favor, rellena todos los campos antes de continuar.');
+                    return;
+                }
+            }
+
+            // Ocultar paso actual y mostrar el siguiente
+            document.getElementById(`step${current}`).classList.remove('step-active');
+            document.getElementById(`step${next}`).classList.add('step-active');
+
+            // Actualizar indicadores visuales de progreso
+            document.getElementById(`p${current}`).classList.remove('active');
+            document.getElementById(`p${next}`).classList.add('active');
+        }
+
+        // Generar el PDF localmente en la RAM
+        function generateLocalPDF() {
+            // Capturar datos del formulario
+            const owner = document.getElementById('ownerName').value;
+            const pet = document.getElementById('petName').value;
+            const age = document.getElementById('petAge').value;
+            const breed = document.getElementById('petBreed').value;
+            const species = document.querySelector('input[name="species"]:checked').value;
+            const hair = document.querySelector('input[name="hair"]:checked').value;
+            const cut = document.getElementById('cutStyle').value;
+
+            // Obtener la fecha de hoy formateada (AAAA-MM-DD)
+            const today = new Date().toISOString().split('T')[0];
+
+            // Inyectar datos en la plantilla oculta del PDF
+            document.getElementById('pdf-owner').innerText = owner;
+            document.getElementById('pdf-pet').innerText = pet;
+            document.getElementById('pdf-age').innerText = age;
+            document.getElementById('pdf-breed').innerText = breed;
+            document.getElementById('pdf-species').innerText = species;
+            document.getElementById('pdf-hair').innerText = hair;
+            document.getElementById('pdf-cut').innerText = cut;
+
+            // Nombre de archivo requerido: "nombre del propietario_nombre mascota_fecha de creacion del registro"
+            // Reemplazamos espacios con guiones bajos para que sea un nombre limpio de archivo
+            const fileName = `${owner.trim().replace(/\s+/g, '_')}_${pet.trim().replace(/\s+/g, '_')}_${today}.pdf`;
+
+            // Configurar opciones de generación de la librería html2pdf
+            const element = document.getElementById('pdf-template');
+            element.style.display = 'block'; // Mostrar temporalmente para el motor de renderizado
+
+            const options = {
+                margin:       10,
+                filename:     fileName,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Ejecutar la descarga directa y ocultar la plantilla de nuevo
+            html2pdf().set(options).from(element).save().then(() => {
+                element.style.display = 'none';
+                alert('¡Registro exitoso! Tu PDF resumido se ha descargado de forma local y privada.');
+            });
+        }
+    </script>
 </body>
 </html>

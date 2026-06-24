@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CONFIGURACIÓN GENERAL Y PALETA AZUL CIELO / BLANCO
+   THEME PALETTE (Metallic Chromes, Deep Slates & Sky Bio-Glow)
    ========================================================================== */
 * {
     margin: 0;
@@ -9,28 +9,56 @@
 }
 
 :root {
-    --sky-blue-light: #e0f2fe;
-    --sky-blue-main: #7bc8f6;
-    --sky-blue-dark: #1d4ed8;
-    --clean-white: #ffffff;
-    --soft-gray: #f8fafc;
-    --text-dark: #334155;
+    --chrome-slate: #2a3439; /* Dark metallic tone matching image text */
+    --sky-glow: #0ea5e9;     /* Deep rich cyan bubble tint */
+    --sky-mist: #e0f2fe;     /* Bright fresh sky background element */
+    --foam-white: #ffffff;
+    --glass-shimmer: rgba(255, 255, 255, 0.45);
+    --border-glass: rgba(14, 165, 233, 0.25);
 }
 
 body {
-    background-color: var(--sky-blue-light);
-    color: var(--text-dark);
+    background: linear-gradient(135deg, var(--sky-mist) 0%, #bae6fd 100%);
+    color: var(--chrome-slate);
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
     overflow-x: hidden;
     position: relative;
 }
 
 /* ==========================================================================
-   EFECTO SURREALISTA: BURBUJAS DE BAÑO FLOTANTES
+   HIGH-END CHROMATIC METALLIC LOGO RECREATION
    ========================================================================== */
-.bubble-container {
+.logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.logo-stylish {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 600;
+    background: linear-gradient(180deg, #576574 0%, var(--chrome-slate) 100%);
+    -webkit-background-clip: text;
+    background-clip: text; /* <-- Añade esta línea estándar aquí */
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0px 3px 2px rgba(0,0,0,0.15));
+    letter-spacing: -1px;
+}
+
+.logo-sub {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--chrome-slate);
+    margin-top: -8px;
+    opacity: 0.9;
+}
+
+/* ==========================================================================
+   3D BUBBLE AMBIENT LAYER
+   ========================================================================== */
+.bubble-ambient {
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -40,317 +68,287 @@ body {
     pointer-events: none;
 }
 
-.bubble {
+.bubble-glow {
     position: absolute;
-    bottom: -100px;
-    background: rgba(255, 255, 255, 0.4);
-    border: 1px solid rgba(123, 200, 246, 0.3);
+    bottom: -150px;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7) 0%, rgba(14,165,233,0.2) 60%, rgba(14,165,233,0.4) 100%);
+    border: 1px solid rgba(255,255,255,0.6);
     border-radius: 50%;
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.8);
-    animation: floatBubbles 12s infinite linear;
+    box-shadow: 0 10px 25px rgba(14,165,233,0.15), inset -5px -5px 15px rgba(14,165,233,0.3);
+    animation: bubbleRise 16s infinite linear;
 }
 
-/* Tamaños y posiciones variadas para las burbujas */
-.bubble:nth-child(1) { width: 40px; height: 40px; left: 10%; animation-duration: 8s; }
-.bubble:nth-child(2) { width: 80px; height: 80px; left: 25%; animation-duration: 14s; animation-delay: 2s; }
-.bubble:nth-child(3) { width: 30px; height: 30px; left: 45%; animation-duration: 10s; animation-delay: 1s; }
-.bubble:nth-child(4) { width: 60px; height: 60px; left: 70%; animation-duration: 12s; }
-.bubble:nth-child(5) { width: 90px; height: 90px; left: 85%; animation-duration: 16s; animation-delay: 3s; }
+.bubble-glow:nth-child(1) { width: 120px; height: 120px; left: 8%; animation-duration: 11s; }
+.bubble-glow:nth-child(2) { width: 70px; height: 70px; left: 40%; animation-duration: 15s; animation-delay: 2s; }
+.bubble-glow:nth-child(3) { width: 160px; height: 160px; left: 75%; animation-duration: 19s; animation-delay: 1s; }
+.bubble-glow:nth-child(4) { width: 90px; height: 90px; left: 90%; animation-duration: 13s; }
 
-@keyframes floatBubbles {
-    0% { transform: translateY(0) scale(1); opacity: 0; }
-    10% { opacity: 1; }
+@keyframes bubbleRise {
+    0% { transform: translateY(0) scale(0.9) rotate(0deg); opacity: 0; }
+    15% { opacity: 1; }
     90% { opacity: 1; }
-    100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+    100% { transform: translateY(-125vh) scale(1.1) rotate(35deg); opacity: 0; }
 }
 
 /* ==========================================================================
-   HEADER Y REDES SOCIALES
+   NAVBAR & MODERN NETWORKS
    ========================================================================== */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 4rem;
-    background-color: var(--clean-white);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    padding: 1.5rem 5rem;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.03);
 }
 
-.logo {
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: var(--sky-blue-dark);
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.8rem;
 }
 
-.italic-brand {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-weight: 600;
-}
-
-.social-links {
-    display: flex;
-    gap: 1rem;
-}
-
-.social-btn {
+.social-pill {
     text-decoration: none;
-    padding: 0.6rem 1.2rem;
+    padding: 0.5rem 1.2rem;
     border-radius: 50px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 600;
-    transition: all 0.3s ease;
+    color: var(--foam-white);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
 }
 
-.social-btn.wa {
-    background-color: #25d366;
-    color: white;
-}
-.social-btn.tt {
-    background-color: #000000;
-    color: white;
-}
+.social-pill.wa { background: #25d366; }
+.social-pill.tt { background: #000000; }
+.social-pill.ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+.social-pill.fb { background: #1877f2; }
 
-.social-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+.social-pill:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 /* ==========================================================================
-   SECCIÓN DE CONTENIDO Y ESTRUCTURA DE FORMULARIO
+   AI SERVICES LAYOUT (Cards with Depth Blur)
    ========================================================================== */
-.main-container {
-    max-width: 1000px;
+.main-wrapper {
+    max-width: 1200px;
     margin: 4rem auto;
     padding: 0 2rem;
-    width: 100%;
 }
 
-.services-summary {
-    text-align: center;
-    margin-bottom: 3rem;
+.services-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 5rem;
 }
 
-.services-summary h1 {
-    font-size: 2.5rem;
-    color: var(--sky-blue-dark);
-    margin-bottom: 1rem;
-}
-
-.services-summary p {
-    font-size: 1.05rem;
-    opacity: 0.8;
-    max-width: 600px;
-    margin: 0 auto 1.5rem auto;
-}
-
-.badge-container {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.badge {
-    background: var(--clean-white);
-    padding: 0.5rem 1rem;
+.service-card {
+    background: var(--foam-white);
     border-radius: 20px;
-    font-size: 0.85rem;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-    border: 1px solid var(--sky-blue-light);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid rgba(255,255,255,0.6);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    text-align: center;
 }
 
-/* TARJETA INTERACTIVA DE FORMULARIO */
-.form-card {
-    background-color: var(--clean-white);
-    border-radius: 24px;
-    padding: 3rem;
-    box-shadow: 0 10px 40px rgba(123, 200, 246, 0.15);
+.service-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    filter: saturate(1.1);
+    transition: transform 0.5s ease;
 }
 
-/* Indicadores de Pasos */
-.progress-bar {
+.service-card h3 {
+    padding: 1.5rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--chrome-slate);
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(14, 165, 233, 0.15);
+}
+
+.service-card:hover img {
+    transform: scale(1.05);
+}
+
+/* ==========================================================================
+   GLASSMORPHISM STEPPED FORM ENGINE
+   ========================================================================== */
+.glass-form-container {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glass);
+    border-radius: 32px;
+    padding: 4rem;
+    box-shadow: 0 20px 50px rgba(14, 165, 233, 0.1);
+}
+
+.stepper-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 3rem;
-    border-bottom: 2px solid var(--soft-gray);
-    padding-bottom: 1rem;
+    margin-bottom: 4rem;
+    border-bottom: 2px solid rgba(14, 165, 233, 0.1);
+    padding-bottom: 1.2rem;
 }
 
-.progress-step {
+.step-indicator {
     font-size: 0.9rem;
     font-weight: 600;
-    color: #cbd5e1;
-    transition: color 0.3s ease;
+    color: #94a3b8;
 }
 
-.progress-step.active {
-    color: var(--sky-blue-dark);
-    border-bottom: 3px solid var(--sky-blue-dark);
-    padding-bottom: 1rem;
-    margin-bottom: -1.2rem;
+.step-indicator.active {
+    color: var(--sky-glow);
+    border-bottom: 3px solid var(--sky-glow);
+    padding-bottom: 1.2rem;
+    margin-bottom: -1.45rem;
 }
 
-/* Estados de visibilidad por paso */
-.form-step {
-    display: none;
-}
+.form-step { display: none; }
+.form-step.step-active { display: block; animation: smoothReveal 0.4s ease-out forwards; }
 
-.form-step.step-active {
-    display: block;
-    animation: fadeIn 0.4s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+@keyframes smoothReveal {
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 .form-step h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    color: var(--sky-blue-dark);
+    font-size: 1.7rem;
+    margin-bottom: 2rem;
+    color: var(--chrome-slate);
 }
 
-/* ELEMENTOS DE INPUT Y DISEÑO DE REJILLA */
-.input-group {
-    margin-bottom: 1.5rem;
+/* HIGH-END NEOMORPHIC INPUT FIELDS */
+.input-field {
+    margin-bottom: 2rem;
 }
 
-.input-group label {
+.input-field label {
     display: block;
     font-size: 0.85rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.input-group input, .input-group select {
+.input-field input, .input-field select {
     width: 100%;
-    padding: 0.8rem 1rem;
-    border: 2px solid var(--soft-gray);
-    border-radius: 12px;
-    background-color: var(--soft-gray);
-    font-size: 0.95rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid rgba(14, 165, 233, 0.15);
+    border-radius: 16px;
+    background: var(--foam-white);
+    font-size: 1rem;
+    color: var(--chrome-slate);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
     transition: all 0.3s ease;
 }
 
-.input-group input:focus, .input-group select:focus {
+.input-field input:focus, .input-field select:focus {
     outline: none;
-    border-color: var(--sky-blue-main);
-    background-color: var(--clean-white);
+    border-color: var(--sky-glow);
+    box-shadow: 0 0 15px rgba(14, 165, 233, 0.25);
 }
 
-.grid-inputs {
+.dual-fields {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
-/* DISEÑO DE CASILLAS MODERNAS PARA SELECCIÓN (BOTONES GRANDES) */
-.radio-tile-group {
+/* PREMIUM RADIO DESIGN INTERACTION */
+.custom-tile-group {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
-.radio-tile {
-    position: relative;
-    cursor: pointer;
-}
+.tile-option { position: relative; cursor: pointer; }
+.tile-option input { position: absolute; opacity: 0; }
 
-.radio-tile input {
-    position: absolute;
-    opacity: 0;
-}
-
-.tile-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1.5rem;
-    background-color: var(--soft-gray);
-    border: 2px solid var(--soft-gray);
-    border-radius: 12px;
+.tile-design {
+    padding: 1.8rem;
+    background: var(--foam-white);
+    border: 1px solid rgba(14, 165, 233, 0.15);
+    border-radius: 16px;
     font-weight: 600;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
 }
 
-.radio-tile input:checked + .tile-content {
-    background-color: #f0f9ff;
-    border-color: var(--sky-blue-main);
-    color: var(--sky-blue-dark);
-    transform: scale(1.02);
-}
-
-/* BOTONES DE CONTROL ACCIÓN */
-.btn-group {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: 2.5rem;
-}
-
-.btn-next, .btn-submit, .btn-back {
-    padding: 0.9rem 2rem;
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-next {
-    background-color: var(--sky-blue-dark);
-    color: white;
-    width: 100%;
-    margin-top: 1.5rem;
-}
-
-.btn-submit {
-    background-color: #b45309; /* Color dorado/marrón sofisticado */
-    color: white;
-    flex-grow: 1;
-}
-
-.btn-back {
-    background-color: var(--soft-gray);
-    color: var(--text-dark);
-}
-
-.btn-next:hover, .btn-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+.tile-option input:checked + .tile-design {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    color: var(--foam-white);
+    border-color: transparent;
+    box-shadow: 0 10px 25px rgba(14, 165, 233, 0.35);
+    transform: scale(1.03);
 }
 
 /* ==========================================================================
-   DISEÑO RESPONSIVO MÓVIL (Celulares)
+   HIGH-GLOSS GLOW BUTTON ENGINE
    ========================================================================== */
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        padding: 1.5rem;
-        gap: 1rem;
-    }
+.navigation-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
 
-    .main-container {
-        margin: 1.5rem auto;
-        padding: 0 1rem;
-    }
+.btn-glow-action, .btn-finalize, .btn-secondary {
+    padding: 1.1rem 2.5rem;
+    border: none;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
 
-    .services-summary h1 {
-        font-size: 1.8rem;
-    }
+.btn-glow-action {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    color: var(--foam-white);
+    width: 100%;
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3);
+}
 
-    .form-card {
-        padding: 1.5rem;
-    }
+.btn-finalize {
+    background: linear-gradient(135deg, var(--chrome-slate) 0%, #1e293b 100%);
+    color: var(--foam-white);
+    flex-grow: 1;
+    box-shadow: 0 8px 25px rgba(42, 52, 57, 0.25);
+}
 
-    .grid-inputs, .radio-tile-group {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.6);
+    color: var(--chrome-slate);
+    border: 1px solid rgba(0,0,0,0.05);
+}
 
-    .btn-group {
-        flex-direction: column-reverse;
-    }
+.btn-glow-action:hover, .btn-finalize:hover {
+    transform: translateY(-4px);
+}
+.btn-glow-action:hover { box-shadow: 0 12px 30px rgba(14, 165, 233, 0.5); }
+.btn-finalize:hover { box-shadow: 0 12px 30px rgba(42, 52, 57, 0.4); }
+
+/* ==========================================================================
+   MOBILE SCALING MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 900px) {
+    .navbar { flex-direction: column; padding: 2rem; gap: 1.5rem; }
+    .social-grid { grid-template-columns: repeat(2, 1fr); width: 100%; }
+    .services-section { grid-template-columns: 1fr; gap: 1.5rem; }
+    .glass-form-container { padding: 2rem 1.5rem; border-radius: 24px; }
+    .dual-fields, .custom-tile-group { grid-template-columns: 1fr; gap: 1.2rem; }
+    .navigation-group { flex-direction: column-reverse; }
 }

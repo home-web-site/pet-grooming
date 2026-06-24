@@ -5,15 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stylish Dog Grooming — Premium Local Registry</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Fonts: Added Playball for the hand-drawn script logo vibe -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playball&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     
-    <!-- html2pdf Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-    <!-- Unified Engine Script (Guarantees functions are ready instantly) -->
     <script>
         const styleDatabase = {
             "Dog": ["Standard Breed Sculpting", "Puppy Cut (Even Length)", "Teddy Bear Profile", "Asian Fusion Rounded Head", "De-shedding + Smooth Blowout"],
@@ -93,15 +90,15 @@
 </head>
 <body>
 
-    <!-- Animated Ambient Layer with Scissors & Paws -->
     <div class="ambient-layer">
-        <div class="floating-icon paw" style="left: 10%; animation-delay: 0s; width: 60px; height: 60px;"></div>
-        <div class="floating-icon scissor" style="left: 25%; animation-delay: 3s; width: 50px; height: 50px;"></div>
-        <div class="floating-icon paw" style="left: 55%; animation-delay: 1s; width: 45px; height: 45px;"></div>
-        <div class="floating-icon scissor" style="left: 80%; animation-delay: 5s; width: 65px; height: 65px;"></div>
+        <div class="floating-icon paw" style="left: 8%; animation-duration: 14s; width: 50px; height: 50px; --starting-opacity: 0.08;"></div>
+        <div class="floating-icon bubble" style="left: 22%; animation-duration: 11s; animation-delay: 1s; width: 90px; height: 90px;"></div>
+        <div class="floating-icon scissor" style="left: 45%; animation-duration: 17s; animation-delay: 3s; width: 45px; height: 45px; --starting-opacity: 0.08;"></div>
+        <div class="floating-icon bubble" style="left: 60%; animation-duration: 15s; width: 60px; height: 60px;"></div>
+        <div class="floating-icon paw" style="left: 78%; animation-duration: 12s; animation-delay: 2s; width: 40px; height: 40px; --starting-opacity: 0.08;"></div>
+        <div class="floating-icon bubble" style="left: 90%; animation-duration: 18s; animation-delay: 4s; width: 110px; height: 110px;"></div>
     </div>
 
-    <!-- Header / Nav -->
     <header class="navbar">
         <div class="logo-container-art">
             <span class="brand-title">Stylish</span>
@@ -116,7 +113,6 @@
     </header>
 
     <main class="main-wrapper">
-        <!-- Services Section -->
         <section class="services-section">
             <div class="service-card">
                 <img src="https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&q=80&w=400" alt="Dog & Cat Bathing">
@@ -132,7 +128,6 @@
             </div>
         </section>
 
-        <!-- Interactive Glass Form Container -->
         <section class="glass-form-container">
             <div class="stepper-header">
                 <div class="step-indicator active" id="ind1">01. Owner & Pet</div>
@@ -141,7 +136,6 @@
             </div>
 
             <form id="groomingForm" onsubmit="return false;">
-                <!-- STEP 1 -->
                 <div class="form-step step-active" id="step1">
                     <h2>Owner & Pet Details</h2>
                     <div class="input-field">
@@ -165,7 +159,6 @@
                     <button type="button" class="btn-glow-action" onclick="navigateStep(1, 2)">Continue ➜</button>
                 </div>
 
-                <!-- STEP 2 -->
                 <div class="form-step" id="step2">
                     <h2>Species & Coat Specs</h2>
                     <div class="input-field">
@@ -202,14 +195,12 @@
                     </div>
                 </div>
 
-                <!-- STEP 3 -->
                 <div class="form-step" id="step3">
                     <h2>Choose Haircut Style</h2>
                     <div class="input-field">
                         <label>Available Styles</label>
                         <select id="cutStyle">
-                            <!-- Injected dynamically -->
-                        </select>
+                            </select>
                     </div>
 
                     <div class="navigation-group">
@@ -221,7 +212,6 @@
         </section>
     </main>
 
-    <!-- Invisible Rich PDF Template -->
     <div id="pdf-output-template" style="display: none; background: #ffffff; min-height: 297mm;">
         <div style="padding: 45px; font-family: 'Poppins', sans-serif; color: #1e293b;">
             <div style="text-align: center; border-bottom: 4px solid #0ea5e9; padding-bottom: 20px; margin-bottom: 30px;">

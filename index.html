@@ -207,40 +207,43 @@
         }
 
         function processSecurePDF() {
-            const o = document.getElementById('ownerName').value;
-            const p = document.getElementById('petName').value;
-            const a = document.getElementById('petAge').value;
-            const b = document.getElementById('petBreed').value;
-            const s = document.querySelector('input[name="species"]:checked').value;
-            const c = document.querySelector('input[name="coat"]:checked').value;
-            const st = document.getElementById('cutStyle').value;
-            const d = new Date().toISOString().split('T')[0];
+    const o = document.getElementById('ownerName').value;
+    const p = document.getElementById('petName').value;
+    const a = document.getElementById('petAge').value;
+    const b = document.getElementById('petBreed').value;
+    const s = document.querySelector('input[name="species"]:checked').value;
+    const c = document.querySelector('input[name="coat"]:checked').value;
+    const st = document.getElementById('cutStyle').value;
+    const d = new Date().toISOString().split('T')[0];
 
-            // Map all variables to the final PDF layout
-            document.getElementById('pdf-v-owner').innerText = o;
-            document.getElementById('pdf-v-pet').innerText = p;
-            document.getElementById('pdf-v-age').innerText = a;
-            document.getElementById('pdf-v-breed').innerText = b;
-            document.getElementById('pdf-v-species').innerText = s;
-            document.getElementById('pdf-v-coat').innerText = c;
-            document.getElementById('pdf-v-style').innerText = st;
+    // Asignación explícita e inmediata al HTML del PDF
+    document.getElementById('pdf-v-owner').innerHTML = o;
+    document.getElementById('pdf-v-pet').innerHTML = p;
+    document.getElementById('pdf-v-age').innerHTML = a;
+    document.getElementById('pdf-v-breed').innerHTML = b;
+    document.getElementById('pdf-v-species').innerHTML = s;
+    document.getElementById('pdf-v-coat').innerHTML = c;
+    document.getElementById('pdf-v-style').innerHTML = st;
 
-            const docName = `${o.trim().replace(/\s+/g, '_')}_${p.trim().replace(/\s+/g, '_')}_${d}.pdf`;
-            const frame = document.getElementById('pdf-output-template');
-            frame.style.display = 'block';
+    // Nombre de archivo requerido
+    const docName = `${o.trim().replace(/\s+/g, '_')}_${p.trim().replace(/\s+/g, '_')}_${d}.pdf`;
+    
+    const frame = document.getElementById('pdf-output-template');
+    
+    // Mostramos el elemento un milisegundo antes para que la librería pueda clonar todo el texto completo
+    frame.style.display = 'block';
 
-            const settings = {
-                margin: 12,
-                filename: docName,
-                html2canvas: { scale: 2.5, useCORS: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+    const settings = {
+        margin: 15,
+        filename: docName,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, logging: false, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
 
-            html2pdf().set(settings).from(frame).save().then(() => {
-                frame.style.display = 'none';
-                alert('Secure Registry Finished! Your document has been locally compiled and downloaded.');
-            });
-        }
-    </script>
-</body>
-</html>
+    // Forzamos el procesamiento asíncrono ordenado
+    html2pdf().set(settings).from(frame).toContainer().toCanvas().toImg().toPdf().save().then(() => {
+        frame.style.display = 'none';
+        alert('Secure Registry Finished! Your document has been locally compiled and downloaded.');
+    });
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stylish Dog Grooming — Premium Local Registry</title>
     <link rel="stylesheet" href="style.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playball&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -63,26 +64,27 @@
             document.getElementById('pdf-v-style').innerText = styleVal;
 
             const docName = `${ownerVal.trim().replace(/\s+/g, '_')}_${petVal.trim().replace(/\s+/g, '_')}_${dateVal}.pdf`;
+            
+            // Forzar limpieza absoluta para el renderizado del PDF
             const frame = document.getElementById('pdf-output-template');
             frame.style.display = 'block';
 
             const settings = {
-                margin: 0,
+                margin: [0, 0, 0, 0],
                 filename: docName,
-                html2canvas: { scale: 2, useCORS: true, logging: false },
+                html2canvas: { scale: 2, useCORS: true, logging: false, scrollY: 0 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
             html2pdf().set(settings).from(frame).save().then(() => {
                 frame.style.display = 'none';
-                alert('Secure Registry Finished! Your document has been locally compiled and downloaded.');
+                alert('Secure Registry Finished! Your document has been locally downloaded.');
             }).catch(err => {
                 console.error(err);
                 frame.style.display = 'none';
             });
         }
 
-        // Auto-run setup when DOM triggers
         document.addEventListener("DOMContentLoaded", () => {
             syncCuts();
         });
@@ -91,12 +93,12 @@
 <body>
 
     <div class="ambient-layer">
-        <div class="floating-icon paw" style="left: 8%; animation-duration: 14s; width: 50px; height: 50px; --starting-opacity: 0.08;"></div>
-        <div class="floating-icon bubble" style="left: 22%; animation-duration: 11s; animation-delay: 1s; width: 90px; height: 90px;"></div>
-        <div class="floating-icon scissor" style="left: 45%; animation-duration: 17s; animation-delay: 3s; width: 45px; height: 45px; --starting-opacity: 0.08;"></div>
-        <div class="floating-icon bubble" style="left: 60%; animation-duration: 15s; width: 60px; height: 60px;"></div>
-        <div class="floating-icon paw" style="left: 78%; animation-duration: 12s; animation-delay: 2s; width: 40px; height: 40px; --starting-opacity: 0.08;"></div>
-        <div class="floating-icon bubble" style="left: 90%; animation-duration: 18s; animation-delay: 4s; width: 110px; height: 110px;"></div>
+        <div class="floating-item style-paw" style="left: 7%; animation-delay: 0s; font-size: 40px;">🐾</div>
+        <div class="floating-item style-bubble" style="left: 20%; animation-delay: 2s; width: 70px; height: 70px;"></div>
+        <div class="floating-item style-scissor" style="left: 38%; animation-delay: 5s; font-size: 35px;">✂️</div>
+        <div class="floating-item style-bubble" style="left: 55%; animation-delay: 0s; width: 45px; height: 45px;"></div>
+        <div class="floating-item style-paw" style="left: 72%; animation-delay: 3s; font-size: 30px;">🐾</div>
+        <div class="floating-item style-bubble" style="left: 88%; animation-delay: 7s; width: 90px; height: 90px;"></div>
     </div>
 
     <header class="navbar">
@@ -212,15 +214,15 @@
         </section>
     </main>
 
-    <div id="pdf-output-template" style="display: none; background: #ffffff; min-height: 297mm;">
-        <div style="padding: 45px; font-family: 'Poppins', sans-serif; color: #1e293b;">
-            <div style="text-align: center; border-bottom: 4px solid #0ea5e9; padding-bottom: 20px; margin-bottom: 30px;">
-                <h1 style="font-family: 'Playball', cursive; font-size: 42px; color: #1e293b; margin: 0;">Stylish</h1>
-                <p style="font-size: 11px; font-weight:700; color: #475569; letter-spacing: 4px; margin: -5px 0 10px 0;">DOG GROOMING</p>
-                <p style="font-size: 12px; color: #64748b;">Official Digital Grooming Voucher • 100% Secure Local Registry</p>
+    <div id="pdf-output-template" style="display: none; background: #ffffff; width: 210mm; min-height: 297mm; position: absolute; top: 0; left: 0; margin: 0; z-index: 9999;">
+        <div style="padding: 40px; font-family: 'Poppins', sans-serif; color: #1e293b;">
+            <div style="text-align: center; border-bottom: 4px solid #0ea5e9; padding-bottom: 15px; margin-bottom: 25px;">
+                <h1 style="font-family: 'Playball', cursive; font-size: 45px; color: #1e293b; margin: 0; padding: 0;">Stylish</h1>
+                <p style="font-size: 11px; font-weight:700; color: #475569; letter-spacing: 5px; margin: 0 0 10px 0;">DOG GROOMING</p>
+                <p style="font-size: 12px; color: #64748b; margin: 0;">Official Digital Grooming Voucher • 100% Secure Local Registry</p>
             </div>
 
-            <h2 style="font-size: 18px; color: #0ea5e9; margin-bottom: 15px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">1. Customer & Pet Summary</h2>
+            <h2 style="font-size: 18px; color: #0ea5e9; margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">1. Customer & Pet Summary</h2>
             <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 14px;">
                 <tr style="background-color: #f8fafc;"><td style="padding: 12px; font-weight: 600; width: 40%;">Owner Name:</td><td style="padding: 12px;" id="pdf-v-owner"></td></tr>
                 <tr><td style="padding: 12px; font-weight: 600;">Pet Name:</td><td style="padding: 12px;" id="pdf-v-pet"></td></tr>
@@ -235,7 +237,7 @@
                 <tr style="background-color: #f0f9ff; color: #0369a1;"><td style="padding: 12px; font-weight: 700;">Requested Style:</td><td style="padding: 12px; font-weight: 700;" id="pdf-v-style"></td></tr>
             </table>
 
-            <div style="background-color: #f0f9ff; border: 1px solid #bae6fd; padding: 20px; border-radius: 12px; text-align: center; font-size: 12px; color: #0369a1; line-height: 1.5; margin-top: 50px;">
+            <div style="background-color: #f0f9ff; border: 1px solid #bae6fd; padding: 20px; border-radius: 12px; text-align: center; font-size: 12px; color: #0369a1; line-height: 1.5; margin-top: 40px;">
                 <strong>Privacy Protected:</strong> This receipt was built straight inside your device's architecture. Bring this copy to your upcoming grooming session.
             </div>
         </div>

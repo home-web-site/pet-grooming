@@ -186,8 +186,7 @@
             const d = new Date().toISOString().split('T')[0];
 
             if (!document.getElementById('pdf-v-photo-exact').value) {
-                 alert('Please select a reference photo style option.');
-                 return;
+                 alert('Please select a reference photo style option.'); return;
             }
 
             // Bind values to Document Fragment
@@ -202,10 +201,15 @@
 
             const docName = `${o.trim().replace(/\s+/g, '_')}_${p.trim().replace(/\s+/g, '_')}_${d}.pdf`;
             const frame = document.getElementById('pdf-output-template');
+            
+            // CORRECCIÓN: Hacerlo visible y forzar explícitamente color oscuro antes de la captura
             frame.style.display = 'block';
+            frame.style.color = '#1e293b'; 
 
             const settings = {
-                margin: 12, filename: docName, html2canvas: { scale: 2.5, useCORS: true },
+                margin: 12, 
+                filename: docName, 
+                html2canvas: { scale: 2.5, useCORS: true, logging: false },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 

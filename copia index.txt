@@ -65,80 +65,7 @@
             });
 
             // 3. Update the Reference Photos instantly based on the first service
-            // 1. Agenda inteligente: Organizada por RAZA y luego por SERVICIO (Ahora solo con 1 link por servicio)
-            const misImagenesPorRaza = { 
-    "Poodle": {
-        "Corte de Raza": "https://cdn0.expertoanimal.com/es/posts/4/9/8/4_corte_moderno_21894_3_600.jpg",
-        "Corte Cachorro": "https://ejemplo.com/poodle-cachorro.jpg"
-    },
-    "Schnauzer": {
-        "Corte de Raza": "https://ejemplo.com/schnauzer-raza.jpg"
-    },
-    "Yorkshire Terrier": {
-        "Corte de Raza": "https://ejemplo.com/yorkie-raza.jpg"
-    },
-    // Lista "General" para servicios que son iguales para cualquier perro o gato
-    "General": {
-        "Deslanado Profundo": "https://ejemplo.com/deslanado.jpg",
-        "Perfilado Higiénico": "https://ejemplo.com/higienico.jpg"
-    }
-};
-
-// 2. Función actualizada para renderizar una única imagen de referencia
-function updateServicePhotos() {
-    const speciesVal = document.querySelector('input[name="species"]:checked').value;
-    const coatVal = document.querySelector('input[name="coat"]:checked').value;
-    const serviceSelected = document.getElementById('cutStyle').value;
-    const photoGrid = document.getElementById('servicePhotoGrid');
-    
-    // Obtener la raza que el usuario seleccionó (usa el ID exacto de tu menú de razas, ej: 'petBreed')
-    const breedSelectElement = document.getElementById('petBreed');
-    const breedSelected = breedSelectElement ? breedSelectElement.value : "General";
-    
-    // Reiniciar la cuadrícula
-    photoGrid.innerHTML = "";
-    document.getElementById('pdf-v-photo-exact').value = ""; 
-
-    if (!serviceSelected) return;
-
-    // Crear una única tarjeta de diseño
-    let card = document.createElement('div');
-    card.className = 'photo-card-item';
-    card.onclick = function() { selectRefPhoto(this); };
-
-    let img = document.createElement('img');
-    let fotoEncontrada = "";
-
-    // LÓGICA DE BÚSQUEDA INTELIGENTE
-    // 1. Busca si hay una foto específica para esa RAZA y ese SERVICIO
-    if (misImagenesPorRaza[breedSelected] && misImagenesPorRaza[breedSelected][serviceSelected]) {
-        fotoEncontrada = misImagenesPorRaza[breedSelected][serviceSelected];
-    } 
-    // 2. Si no, busca en la sección General
-    else if (misImagenesPorRaza["General"] && misImagenesPorRaza["General"][serviceSelected]) {
-        fotoEncontrada = misImagenesPorRaza["General"][serviceSelected];
-    }
-
-    // Asignar la URL final a la imagen
-    if (fotoEncontrada) {
-        img.src = fotoEncontrada;
-    } else {
-        // Respaldo visual en caso de que falte el link o no haya internet
-        img.src = `https://api.dicebear.com/8.x/icons/svg?seed=${speciesVal}-${coatVal}-${serviceSelected.replace(/\s+/g, '')}&backgroundColor=bae6fd,0ea5e9,ffffff`;
-    }
-    
-    img.alt = `${serviceSelected} reference`;
-
-    let title = document.createElement('p');
-    title.innerText = `${serviceSelected} (Estilo Seleccionado)`;
-
-    card.appendChild(img);
-    card.appendChild(title);
-    photoGrid.appendChild(card);
-
-    // Opcional: Como es una sola imagen, podemos seleccionarla automáticamente por defecto
-    selectRefPhoto(card);
-}
+            updateServicePhotos();
         }
 
         // Dynamically load reference visual placeholders for the chosen custom service
@@ -155,7 +82,7 @@ function updateServicePhotos() {
             if (!serviceSelected) return;
 
             // Generate 3 unique layout card styles for reference selection
-            {
+            for (let i = 1; i <= 3; i++) {
                 let card = document.createElement('div');
                 card.className = 'photo-card-item';
                 card.onclick = function() { selectRefPhoto(this); };

@@ -16,7 +16,31 @@
 
     <!-- Smart Funnel Engine v3 -->
     <script>
-        // MASTER MULTI-LEVEL DATABASE IN ENGLISH
+        // ==========================================================================
+        // 1. GLOBAL DATABASES & CONFIGURATION (At the top, outside functions)
+        // ==========================================================================
+        
+        // Smart Image Directory (Matches exact English terminology from the funnel)
+        const misImagenesPorRaza = {
+            "Poodle": {
+                "Breed-Standard Cut": "https://cdn0.expertoanimal.com/es/posts/4/9/8/poodle_498_0_600.jpg",
+                "Puppy Cut": "https://ejemplo.com/poodle-style-puppy.jpg"
+            },
+            "Schnauzer": {
+                "Breed-Standard Cut": "https://ejemplo.com/schnauzer-standard.jpg"
+            },
+            "Yorkshire Terrier": {
+                "Breed-Standard Cut": "https://ejemplo.com/yorkie-standard.jpg"
+            },
+            // Fallback object for identical universal treatments
+            "General": {
+                "General Bath": "https://ejemplo.com/universal-bath.jpg",
+                "Flea & Tick Bath": "https://ejemplo.com/flea-bath.jpg",
+                "Medicated Bath": "https://ejemplo.com/medicated-bath.jpg"
+            }
+        };
+
+        // Master Multi-Level Hierarchy Filter Mapping
         const funnelDatabase = {
             "Dog": {
                 "Long Hair": {
@@ -39,6 +63,10 @@
                 }
             }
         };
+
+        // ==========================================================================
+        // 2. CORE LOGIC ENGINE FUNCTIONS
+        // ==========================================================================
 
         // Cascading Synch Logic (Species + Coat -> Breeds & Services)
         function updateFunnel() {
@@ -65,88 +93,19 @@
             });
 
             // 3. Update the Reference Photos instantly based on the first service
-            // 1. Agenda inteligente: Organizada por RAZA y luego por SERVICIO (Ahora solo con 1 link por servicio)
-            const misImagenesPorRaza = { 
-    "Poodle": {
-        "Corte de Raza": "https://cdn0.expertoanimal.com/es/posts/4/9/8/4_corte_moderno_21894_3_600.jpg",
-        "Corte Cachorro": "https://ejemplo.com/poodle-cachorro.jpg"
-    },
-    "Schnauzer": {
-        "Corte de Raza": "https://ejemplo.com/schnauzer-raza.jpg"
-    },
-    "Yorkshire Terrier": {
-        "Corte de Raza": "https://ejemplo.com/yorkie-raza.jpg"
-    },
-    // Lista "General" para servicios que son iguales para cualquier perro o gato
-    "General": {
-        "Deslanado Profundo": "https://ejemplo.com/deslanado.jpg",
-        "Perfilado Higiénico": "https://ejemplo.com/higienico.jpg"
-    }
-};
-
-// 2. Función actualizada para renderizar una única imagen de referencia
-function updateServicePhotos() {
-    const speciesVal = document.querySelector('input[name="species"]:checked').value;
-    const coatVal = document.querySelector('input[name="coat"]:checked').value;
-    const serviceSelected = document.getElementById('cutStyle').value;
-    const photoGrid = document.getElementById('servicePhotoGrid');
-    
-    // Obtener la raza que el usuario seleccionó (usa el ID exacto de tu menú de razas, ej: 'petBreed')
-    const breedSelectElement = document.getElementById('petBreed');
-    const breedSelected = breedSelectElement ? breedSelectElement.value : "General";
-    
-    // Reiniciar la cuadrícula
-    photoGrid.innerHTML = "";
-    document.getElementById('pdf-v-photo-exact').value = ""; 
-
-    if (!serviceSelected) return;
-
-    // Crear una única tarjeta de diseño
-    let card = document.createElement('div');
-    card.className = 'photo-card-item';
-    card.onclick = function() { selectRefPhoto(this); };
-
-    let img = document.createElement('img');
-    let fotoEncontrada = "";
-
-    // LÓGICA DE BÚSQUEDA INTELIGENTE
-    // 1. Busca si hay una foto específica para esa RAZA y ese SERVICIO
-    if (misImagenesPorRaza[breedSelected] && misImagenesPorRaza[breedSelected][serviceSelected]) {
-        fotoEncontrada = misImagenesPorRaza[breedSelected][serviceSelected];
-    } 
-    // 2. Si no, busca en la sección General
-    else if (misImagenesPorRaza["General"] && misImagenesPorRaza["General"][serviceSelected]) {
-        fotoEncontrada = misImagenesPorRaza["General"][serviceSelected];
-    }
-
-    // Asignar la URL final a la imagen
-    if (fotoEncontrada) {
-        img.src = fotoEncontrada;
-    } else {
-        // Respaldo visual en caso de que falte el link o no haya internet
-        img.src = `https://api.dicebear.com/8.x/icons/svg?seed=${speciesVal}-${coatVal}-${serviceSelected.replace(/\s+/g, '')}&backgroundColor=bae6fd,0ea5e9,ffffff`;
-    }
-    
-    img.alt = `${serviceSelected} reference`;
-
-    let title = document.createElement('p');
-    title.innerText = `${serviceSelected} (Estilo Seleccionado)`;
-
-    card.appendChild(img);
-    card.appendChild(title);
-    photoGrid.appendChild(card);
-
-    // Opcional: Como es una sola imagen, podemos seleccionarla automáticamente por defecto
-    selectRefPhoto(card);
-}
+            updateServicePhotos();
         }
 
-        // Dynamically load reference visual placeholders for the chosen custom service
+        // Dynamically load a single reference image matching selected metrics
         function updateServicePhotos() {
             const speciesVal = document.querySelector('input[name="species"]:checked').value;
             const coatVal = document.querySelector('input[name="coat"]:checked').value;
             const serviceSelected = document.getElementById('cutStyle').value;
             const photoGrid = document.getElementById('servicePhotoGrid');
+            
+            // Retrieve current active breed
+            const breedSelectElement = document.getElementById('petBreed');
+            const breedSelected = breedSelectElement ? breedSelectElement.value : "General";
             
             // Reset grid selections
             photoGrid.innerHTML = "";
@@ -154,24 +113,42 @@ function updateServicePhotos() {
 
             if (!serviceSelected) return;
 
-            // Generate 3 unique layout card styles for reference selection
-            {
-                let card = document.createElement('div');
-                card.className = 'photo-card-item';
-                card.onclick = function() { selectRefPhoto(this); };
+            // Create single card element
+            let card = document.createElement('div');
+            card.className = 'photo-card-item';
+            card.onclick = function() { selectRefPhoto(this); };
 
-                let img = document.createElement('img');
-                // Procedural generation seed to guarantee specific icons based on selection
-                img.src = `https://api.dicebear.com/8.x/icons/svg?seed=${speciesVal}-${coatVal}-${serviceSelected.replace(/\s+/g, '')}-${i}&backgroundColor=bae6fd,0ea5e9,ffffff`;
-                img.alt = `${serviceSelected} variant ${i}`;
+            let img = document.createElement('img');
+            let fotoEncontrada = "";
 
-                let title = document.createElement('p');
-                title.innerText = `${serviceSelected} (Style Op. ${i})`;
-
-                card.appendChild(img);
-                card.appendChild(title);
-                photoGrid.appendChild(card);
+            // Evaluate specific match tree (Breed -> Service)
+            if (misImagenesPorRaza[breedSelected] && misImagenesPorRaza[breedSelected][serviceSelected]) {
+                fotoEncontrada = misImagenesPorRaza[breedSelected][serviceSelected];
+            } 
+            // Fallback to universal pool if breed match is missing
+            else if (misImagenesPorRaza["General"] && misImagenesPorRaza["General"][serviceSelected]) {
+                fotoEncontrada = misImagenesPorRaza["General"][serviceSelected];
             }
+
+            // Assign structural image source URL
+            if (fotoEncontrada) {
+                img.src = fotoEncontrada;
+            } else {
+                // Procedural generation fallback placeholder
+                img.src = `https://api.dicebear.com/8.x/icons/svg?seed=${speciesVal}-${coatVal}-${serviceSelected.replace(/\s+/g, '')}&backgroundColor=bae6fd,0ea5e9,ffffff`;
+            }
+            
+            img.alt = `${serviceSelected} reference standard`;
+
+            let title = document.createElement('p');
+            title.innerText = `${serviceSelected} (Selected Style)`;
+
+            card.appendChild(img);
+            card.appendChild(title);
+            photoGrid.appendChild(card);
+
+            // Auto-select single layout card instantly
+            selectRefPhoto(card);
         }
 
         // Handle visual activation on grid click
@@ -186,12 +163,14 @@ function updateServicePhotos() {
         function navigateStep(from, to) {
             if (from === 1) {
                 if (!document.getElementById('ownerName').value || !document.getElementById('petName').value || !document.getElementById('petAge').value) {
-                    alert('Please complete all Identity fields.'); return;
+                    alert('Please complete all Identity fields.');
+                    return;
                 }
             }
             if (from === 3) {
                 if (!document.getElementById('pdf-v-photo-exact').value) {
-                    alert('Please choose one Reference Style option from the grid below.'); return;
+                    alert('Please choose one Reference Style option from the grid below.');
+                    return;
                 }
             }
 
@@ -207,7 +186,8 @@ function updateServicePhotos() {
             const d = new Date().toISOString().split('T')[0];
 
             if (!document.getElementById('pdf-v-photo-exact').value) {
-                 alert('Please select a reference photo style option.'); return;
+                 alert('Please select a reference photo style option.');
+                 return;
             }
 
             // Bind values to Document Fragment
@@ -319,7 +299,6 @@ function updateServicePhotos() {
                 <!-- STEP 2: The Funnel Filters (Species & Coat) -->
                 <div class="form-step" id="step2">
                     <h2>Physical Characteristics Filter</h2>
-                    
                     <div class="input-field">
                         <label>1. Choose Species</label>
                         <div class="custom-tile-group single-line">
@@ -357,11 +336,10 @@ function updateServicePhotos() {
                 <!-- STEP 3: Smart Tailored Breeds, Services, and Visual Grid -->
                 <div class="form-step" id="step3">
                     <h2>Tailored Service Options</h2>
-                    
                     <div class="dual-fields">
                         <div class="input-field">
                             <label>Filtered Breed Match</label>
-                            <select id="petBreed">
+                            <select id="petBreed" onchange="updateServicePhotos()">
                                 <!-- Fed Dynamically by Funnel Engine -->
                             </select>
                         </div>
@@ -375,7 +353,7 @@ function updateServicePhotos() {
 
                     <div class="input-field photo-ref-system">
                         <label>Service Reference Gallery Selection</label>
-                        <p class="style-instructions">Click on **one** of the generated style cards to link it to the booking profile.</p>
+                        <p class="style-instructions">Your unique filtered reference card is loaded below.</p>
                         <div id="servicePhotoGrid" class="photo-grid-ref"></div>
                     </div>
 

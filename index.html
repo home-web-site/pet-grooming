@@ -176,40 +176,44 @@
         }
 
         function processSecurePDF() {
-            const o = document.getElementById('ownerName').value;
-            const p = document.getElementById('petName').value;
-            const d = new Date().toISOString().split('T')[0];
+    const o = document.getElementById('ownerName').value;
+    const p = document.getElementById('petName').value;
+    const d = new Date().toISOString().split('T')[0];
 
-            if (!document.getElementById('pdf-v-photo-exact').value) {
-                 alert('Please select a reference photo style option.'); return;
-            }
+    if (!document.getElementById('pdf-v-photo-exact').value) {
+         alert('Please select a reference photo style option.'); return;
+    }
 
-            // Bind values to Document Fragment
-            document.getElementById('pdf-v-owner').innerText = o;
-            document.getElementById('pdf-v-pet').innerText = p;
-            document.getElementById('pdf-v-age').innerText = document.getElementById('petAge').value;
-            document.getElementById('pdf-v-breed').innerText = document.getElementById('petBreed').value;
-            document.getElementById('pdf-v-species').innerText = document.querySelector('input[name="species"]:checked').value;
-            document.getElementById('pdf-v-coat').innerText = document.querySelector('input[name="coat"]:checked').value;
-            document.getElementById('pdf-v-service').innerText = document.getElementById('cutStyle').value;
-            document.getElementById('pdf-v-photo-final').innerText = document.getElementById('pdf-v-photo-exact').value;
+    // Inyectar textos a los elementos
+    document.getElementById('pdf-v-owner').innerText = o;
+    document.getElementById('pdf-v-pet').innerText = p;
+    document.getElementById('pdf-v-age').innerText = document.getElementById('petAge').value;
+    document.getElementById('pdf-v-breed').innerText = document.getElementById('petBreed').value;
+    document.getElementById('pdf-v-species').innerText = document.querySelector('input[name="species"]:checked').value;
+    document.getElementById('pdf-v-coat').innerText = document.querySelector('input[name="coat"]:checked').value;
+    document.getElementById('pdf-v-service').innerText = document.getElementById('cutStyle').value;
+    document.getElementById('pdf-v-photo-final').innerText = document.getElementById('pdf-v-photo-exact').value;
 
-            const docName = `${o.trim().replace(/\s+/g, '_')}_${p.trim().replace(/\s+/g, '_')}_${d}.pdf`;
-            const frame = document.getElementById('pdf-output-template');
-            
-            // Render settings ensuring visible table data structure
-            frame.style.display = 'block';
+    const docName = `${o.trim().replace(/\s+/g, '_')}_${p.trim().replace(/\s+/g, '_')}_${d}.pdf`;
+    const frame = document.getElementById('pdf-output-template');
 
-            const settings = {
-                margin: 12, filename: docName, html2canvas: { scale: 2.5, useCORS: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+    const settings = {
+        margin: 12, 
+        filename: docName, 
+        html2canvas: { scale: 2.5, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    // Generar directamente sin mover el display
+    html2pdf().set(settings).from(frame).save().then(() => {
+        alert('Profile Created! PDF Document generated and saved locally.');
+    });
+}
 
             html2pdf().set(settings).from(frame).save().then(() => {
                 frame.style.display = 'none';
                 alert('Profile Created! PDF Document generated and saved locally.');
             });
-        }
 
         document.addEventListener("DOMContentLoaded", () => {
             updateFunnel(); // Pre-populate dynamic fields cleanly on boot
@@ -353,8 +357,8 @@
         </section>
     </main>
 
-    <div id="pdf-output-template" style="display: none; width: 100%; background: #ffffff !important; box-sizing: border-box;">
-        <div style="padding: 40px; font-family: 'Poppins', sans-serif; background: #ffffff !important; color: #1e293b !important;">
+    <div id="pdf-output-template" style="position: absolute; left: -9999px; top: 0; width: 700px; background: #ffffff !important; color: #1e293b !important; box-sizing: border-box; opacity: 1;">
+        <div style="padding: 40px; font-family: 'Poppins', sans-serif; background: #ffffff !important; color: #1e293b !important; min-height: 100%;">
             
             <div style="text-align: center; border-bottom: 4px solid #0ea5e9; padding-bottom: 20px; margin-bottom: 30px;">
                 <h1 style="font-family: 'Playball', cursive; font-size: 38px; color: #0f172a !important; margin: 0; letter-spacing: 1px;">Stylish Dog Grooming</h1>
@@ -363,23 +367,23 @@
             </div>
 
             <h2 style="font-size: 16px; color: #0ea5e9 !important; margin-top: 20px; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; font-weight: 600;">1. Client Identity File</h2>
-            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; color: #1e293b !important; background: #ffffff !important;">
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; color: #1e293b !important; background-color: #ffffff !important;">
                 <tr style="background-color: #f8fafc !important;">
                     <td style="padding: 12px; font-weight: 600; width: 40%; color: #1e293b !important; border: 1px solid #e2e8f0;">Owner Full Name:</td>
-                    <td style="padding: 12px; color: #1e293b !important; border: 1px solid #e2e8f0;" id="pdf-v-owner"></td>
+                    <td style="padding: 12px; color: #1e293b !important; border: 1px solid #e2e8f0; font-weight: 400;" id="pdf-v-owner"></td>
                 </tr>
                 <tr>
                     <td style="padding: 12px; font-weight: 600; color: #1e293b !important; border: 1px solid #e2e8f0;">Pet Name:</td>
-                    <td style="padding: 12px; color: #1e293b !important; border: 1px solid #e2e8f0;" id="pdf-v-pet"></td>
+                    <td style="padding: 12px; color: #1e293b !important; border: 1px solid #e2e8f0; font-weight: 400;" id="pdf-v-pet"></td>
                 </tr>
                 <tr style="background-color: #f8fafc !important;">
                     <td style="padding: 12px; font-weight: 600; color: #1e293b !important; border: 1px solid #e2e8f0;">Pet Age:</td>
-                    <td style="padding: 12px; color: #1e293b !important; border: 1px solid #e2e8f0;" id="pdf-v-age"></td>
+                    <td style="padding: 12px; color: #1e293b !important; border: 1px solid #e2e8f0; font-weight: 400;" id="pdf-v-age"></td>
                 </tr>
             </table>
 
             <h2 style="font-size: 16px; color: #0ea5e9 !important; margin-top: 20px; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; font-weight: 600;">2. Funnel Filter & Service Matching</h2>
-            <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 14px; color: #1e293b !important; background: #ffffff !important;">
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 14px; color: #1e293b !important; background-color: #ffffff !important;">
                 <tr style="background-color: #f8fafc !important;">
                     <td style="padding: 12px; font-weight: 600; width: 40%; color: #1e293b !important; border: 1px solid #e2e8f0;">Selected Species:</td>
                     <td style="padding: 12px; color: #1e293b !important; border: 1px solid #e2e8f0;" id="pdf-v-species"></td>
@@ -407,5 +411,3 @@
             </div>
         </div>
     </div>
-</body>
-</html>

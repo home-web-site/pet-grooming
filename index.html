@@ -184,7 +184,7 @@
                  alert('Please select a reference photo style option.'); return;
             }
 
-            // Bind values directly to Document Fragment
+            // Bind values directamente al Document Fragment
             document.getElementById('pdf-v-owner').innerText = o;
             document.getElementById('pdf-v-pet').innerText = p;
             document.getElementById('pdf-v-age').innerText = document.getElementById('petAge').value;
@@ -196,18 +196,16 @@
 
             const docName = `${o.trim().replace(/\s+/g, '_')}_${p.trim().replace(/\s+/g, '_')}_${d}.pdf`;
             const frame = document.getElementById('pdf-output-template');
-            
-            // Forzar altura visible temporalmente SOLO para la captura limpia de la librería
-            frame.style.height = 'auto';
 
             const settings = {
-                margin: 12, filename: docName, html2canvas: { scale: 2.5, useCORS: true },
+                margin: 12, 
+                filename: docName, 
+                html2canvas: { scale: 2.5, useCORS: true },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
+            // Se ejecuta de manera directa ya que el elemento mantiene sus propiedades reales fuera de pantalla
             html2pdf().set(settings).from(frame).save().then(() => {
-                // Volver a colapsar a 0px para que permanezca 100% invisible en tu interfaz pastel
-                frame.style.height = '0px';
                 alert('Profile Created! PDF Document generated and saved locally.');
             });
         }
@@ -354,7 +352,8 @@
         </section>
     </main>
 
-    <div id="pdf-output-template" style="width: 700px; height: 0px; overflow: hidden; background: #ffffff !important; color: #1e293b !important; box-sizing: border-box;">
+    <!-- SE CORRIGIÓ EL CONTENEDOR: En lugar de height:0px y overflow:hidden, se usa position:absolute y un desplazamiento negativo masivo -->
+    <div id="pdf-output-template" style="position: absolute; left: -9999px; top: 0; width: 700px; background: #ffffff !important; color: #1e293b !important; box-sizing: border-box;">
         <div style="padding: 40px; font-family: 'Poppins', sans-serif; background: #ffffff !important; color: #1e293b !important;">
             
             <div style="text-align: center; border-bottom: 4px solid #0ea5e9; padding-bottom: 20px; margin-bottom: 30px;">

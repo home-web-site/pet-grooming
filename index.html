@@ -10,14 +10,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playball&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Se cambió a html2canvas para la exportación limpia a JPG -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <script>
         // ==========================================================================
-        // 1. GLOBAL DATABASES & CONFIGURATION (At the top, outside functions)
+        // 1. GLOBAL DATABASES & CONFIGURATION
         // ==========================================================================
-        
-        // Smart Image Directory (Organizada por RAZA y luego por SERVICIO)
         const misImagenesPorRaza = {
             "Poodle": {
                 "Breed-Standard Cut": "https://cdn0.expertoanimal.com/es/posts/4/9/8/poodle_498_0_600.jpg",
@@ -29,7 +28,6 @@
             "Yorkshire Terrier": {
                 "Breed-Standard Cut": "https://ejemplo.com/yorkie-standard.jpg"
             },
-            // Lista "General" para servicios que son iguales para cualquier perro
             "General": {
                 "General Bath": "https://ejemplo.com/universal-bath.jpg",
                 "Flea & Tick Bath": "https://ejemplo.com/flea-bath.jpg",
@@ -37,7 +35,6 @@
             }
         };
 
-        // Master Multi-Level Hierarchy Filter Mapping
         const funnelDatabase = {
             "Dog": {
                 "Long Hair": {
@@ -64,16 +61,11 @@
         // ==========================================================================
         // 2. CORE LOGIC ENGINE FUNCTIONS
         // ==========================================================================
-
-        // Cascading Synch Logic (Species + Coat -> Breeds & Services)
         function updateFunnel() {
             const speciesVal = document.querySelector('input[name="species"]:checked').value;
             const coatVal = document.querySelector('input[name="coat"]:checked').value;
-            
-            // Get targeted active data branch
             const activeBranch = funnelDatabase[speciesVal][coatVal];
 
-            // 1. Sync Breed Dropdown (Alineado con id="petBreed")
             const breedMenu = document.getElementById('petBreed');
             breedMenu.innerHTML = "";
             activeBranch["Breeds"].forEach(breed => {
@@ -81,7 +73,6 @@
                 node.value = breed; node.innerHTML = breed; breedMenu.appendChild(node);
             });
 
-            // 2. Sync Custom Services Dropdown
             const serviceMenu = document.getElementById('cutStyle');
             serviceMenu.innerHTML = "";
             activeBranch["Services"].forEach(service => {
@@ -89,28 +80,23 @@
                 node.value = service; node.innerHTML = service; serviceMenu.appendChild(node);
             });
 
-            // 3. Update the Reference Photos instantly based on the selection
             updateServicePhotos();
         }
 
-        // Dynamically load a single reference image matching selected metrics
         function updateServicePhotos() {
             const speciesVal = document.querySelector('input[name="species"]:checked').value;
             const coatVal = document.querySelector('input[name="coat"]:checked').value;
             const serviceSelected = document.getElementById('cutStyle').value;
             const photoGrid = document.getElementById('servicePhotoGrid');
             
-            // Retrieve current active breed
             const breedSelectElement = document.getElementById('petBreed');
             const breedSelected = breedSelectElement ? breedSelectElement.value : "General";
             
-            // Reset grid selections
             photoGrid.innerHTML = "";
             document.getElementById('pdf-v-photo-exact').value = ""; 
 
             if (!serviceSelected) return;
 
-            // Create single card element
             let card = document.createElement('div');
             card.className = 'photo-card-item';
             card.onclick = function() { selectRefPhoto(this); };
@@ -118,20 +104,15 @@
             let img = document.createElement('img');
             let fotoEncontrada = "";
 
-            // Evaluate specific match tree (Breed -> Service)
             if (misImagenesPorRaza[breedSelected] && misImagenesPorRaza[breedSelected][serviceSelected]) {
                 fotoEncontrada = misImagenesPorRaza[breedSelected][serviceSelected];
-            } 
-            // Fallback to universal pool if breed match is missing
-            else if (misImagenesPorRaza["General"] && misImagenesPorRaza["General"][serviceSelected]) {
+            } else if (misImagenesPorRaza["General"] && misImagenesPorRaza["General"][serviceSelected]) {
                 fotoEncontrada = misImagenesPorRaza["General"][serviceSelected];
             }
 
-            // Assign structural image source URL
             if (fotoEncontrada) {
                 img.src = fotoEncontrada;
             } else {
-                // Procedural generation fallback placeholder
                 img.src = `https://api.dicebear.com/8.x/icons/svg?seed=${speciesVal}-${coatVal}-${serviceSelected.replace(/\s+/g, '')}&backgroundColor=bae6fd,0ea5e9,ffffff`;
             }
             
@@ -144,11 +125,9 @@
             card.appendChild(title);
             photoGrid.appendChild(card);
 
-            // Auto-select single layout card instantly
             selectRefPhoto(card);
         }
 
-        // Handle visual activation on grid click
         function selectRefPhoto(selectedCard) {
             const allCards = document.querySelectorAll('.photo-card-item');
             allCards.forEach(card => card.classList.remove('selected'));
@@ -184,7 +163,7 @@
                  alert('Please select a reference photo style option.'); return;
             }
 
-            // Bind values directamente al Document Fragment
+            // Mapeo dinámico de datos al voucher
             document.getElementById('pdf-v-owner').innerText = o;
             document.getElementById('pdf-v-pet').innerText = p;
             document.getElementById('pdf-v-age').innerText = document.getElementById('petAge').value;
@@ -194,24 +173,34 @@
             document.getElementById('pdf-v-service').innerText = document.getElementById('cutStyle').value;
             document.getElementById('pdf-v-photo-final').innerText = document.getElementById('pdf-v-photo-exact').value;
 
-            const docName = `${o.trim().replace(/\s+/g, '_')}_${p.trim().replace(/\s+/g, '_')}_${d}.pdf`;
-            const frame = document.getElementById('pdf-output-template');
+            const imageName = `${o.trim().replace(/\s+/g, '_')}_${p.trim().replace(/\s+/g, '_')}_${d}.jpg`;
+            const targetTemplate = document.getElementById('pdf-output-template');
 
-            const settings = {
-                margin: 12, 
-                filename: docName, 
-                html2canvas: { scale: 2.5, useCORS: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+            // Renderizado nativo y seguro con html2canvas
+            html2canvas(targetTemplate, {
+                scale: 2.5,
+                useCORS: true,
+                backgroundColor: "#ffffff",
+                logging: false
+            }).then(canvas => {
+                const imageURI = canvas.toDataURL('image/jpeg', 0.9);
+                const triggerLink = document.createElement('a');
+                
+                triggerLink.download = imageName;
+                triggerLink.href = imageURI;
+                document.body.appendChild(triggerLink);
+                triggerLink.click();
+                document.body.removeChild(triggerLink);
 
-            // Se ejecuta de manera directa ya que el elemento mantiene sus propiedades reales fuera de pantalla
-            html2pdf().set(settings).from(frame).save().then(() => {
-                alert('Profile Created! PDF Document generated and saved locally.');
+                alert('Profile Created! Voucher Image (.jpg) generated and saved locally.');
+            }).catch(err => {
+                console.error("Error generating voucher asset:", err);
+                alert('An operational layout error occurred during canvas drawing.');
             });
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            updateFunnel(); // Pre-populate dynamic fields cleanly on boot
+            updateFunnel();
         });
     </script>
 </head>
@@ -343,17 +332,18 @@
                         <div id="servicePhotoGrid" class="photo-grid-ref"></div>
                     </div>
 
-                    <input type="hidden" id="pdf-v-photo-exact"> <div class="navigation-group">
+                    <input type="hidden" id="pdf-v-photo-exact"> 
+                    <div class="navigation-group">
                         <button type="button" class="btn-secondary" onclick="navigateStep(3, 2)">Back</button>
-                        <button type="button" class="btn-finalize" onclick="processSecurePDF()">✨ Save Profile & Create PDF</button>
+                        <button type="button" class="btn-finalize" onclick="processSecurePDF()">✨ Save Profile & Create Voucher</button>
                     </div>
                 </div>
             </form>
         </section>
     </main>
 
-    <!-- SE CORRIGIÓ EL CONTENEDOR: En lugar de height:0px y overflow:hidden, se usa position:absolute y un desplazamiento negativo masivo -->
-    <div id="pdf-output-template" style="position: absolute; left: -9999px; top: 0; width: 700px; background: #ffffff !important; color: #1e293b !important; box-sizing: border-box;">
+    <!-- EL NUEVO CONTENEDOR SEGURO: Utiliza position fixed fuera de pantalla para que el canvas lo dibuje con sus medidas naturales -->
+    <div id="pdf-output-template" style="position: fixed; left: -9999px; top: 0; width: 700px; background: #ffffff !important; color: #1e293b !important; box-sizing: border-box;">
         <div style="padding: 40px; font-family: 'Poppins', sans-serif; background: #ffffff !important; color: #1e293b !important;">
             
             <div style="text-align: center; border-bottom: 4px solid #0ea5e9; padding-bottom: 20px; margin-bottom: 30px;">

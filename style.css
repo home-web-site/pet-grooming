@@ -203,11 +203,10 @@ body {
 .btn-finalize { background: linear-gradient(135deg, var(--chrome-slate) 0%, #1e293b 100%); color: var(--foam-white); flex-grow: 1; box-shadow: 0 8px 25px rgba(42, 52, 57, 0.2); }
 .btn-secondary { background: rgba(255, 255, 255, 0.6); color: var(--chrome-slate); border: 1px solid rgba(0,0,0,0.05); }
 .btn-glow-action:hover, .btn-finalize:hover { transform: translateY(-3px); }
-/* Centrar y escalar los nuevos vectores SVG dentro de los botones */
 .social-pill svg {
     width: 18px;
     height: 18px;
-    fill: currentColor; /* Adopta el color de la letra automáticamente */
+    fill: currentColor; 
     vertical-align: middle;
     display: inline-block;
 }

@@ -373,31 +373,36 @@
     </main>
 
     <!-- Invisible PDF Generation Module -->
-    <div id="pdf-output-template" style="display: none;">
-        <div style="padding: 45px; font-family: 'Poppins', sans-serif; color: #1e293b;">
-            <div style="text-align: center; border-bottom: 4px solid #0ea5e9; padding-bottom: 25px; margin-bottom: 35px;">
-                <h1 style="font-family: 'Playball', cursive; font-size: 40px; color: #0f172a; margin: 0; letter-spacing: 1px;">Stylish Dog Grooming</h1>
-                <p style="font-size: 14px; font-weight: 700; color: #1e293b; letter-spacing: 5px; margin: 5px 0 10px 0;">TAILORED CARE MANIFEST</p>
-                <p style="font-size: 12px; color: #64748b; margin-top: 5px;">Filtered Local Registry Voucher</p>
+    <div id="pdf-output-template" style="display: none; position: absolute; top: 0; left: 0; width: 100%; background: #ffffff !important; color: #1e293b !important;">
+        <div style="padding: 40px; font-family: 'Poppins', sans-serif; background: #ffffff !important; color: #1e293b !important;">
+            
+            <!-- Header -->
+            <div style="text-align: center; border-bottom: 4px solid #0ea5e9; padding-bottom: 20px; margin-bottom: 30px;">
+                <h1 style="font-family: 'Playball', cursive; font-size: 38px; color: #0f172a !important; margin: 0; letter-spacing: 1px;">Stylish Dog Grooming</h1>
+                <p style="font-size: 13px; font-weight: 700; color: #1e293b !important; letter-spacing: 4px; margin: 5px 0 5px 0;">TAILORED CARE MANIFEST</p>
+                <p style="font-size: 11px; color: #64748b !important; margin: 5px 0 0 0;">Filtered Local Registry Voucher</p>
             </div>
 
-            <h2 style="font-size: 18px; color: #0ea5e9; margin-bottom: 15px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">1. Client Identity File</h2>
-            <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 14px;">
-                <tr style="background-color: #f8fafc;"><td style="padding: 12px; font-weight: 600; width: 40%;">Owner Full Name:</td><td style="padding: 12px;" id="pdf-v-owner"></td></tr>
-                <tr><td style="padding: 12px; font-weight: 600;">Pet Name:</td><td style="padding: 12px;" id="pdf-v-pet"></td></tr>
-                <tr style="background-color: #f8fafc;"><td style="padding: 12px; font-weight: 600;">Pet Age:</td><td style="padding: 12px;" id="pdf-v-age"></td></tr>
+            <!-- Section 1 -->
+            <h2 style="font-size: 16px; color: #0ea5e9 !important; margin-top: 20px; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; font-weight: 600;">1. Client Identity File</h2>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px; color: #1e293b !important;">
+                <tr style="background-color: #f8fafc;"><td style="padding: 10px; font-weight: 600; width: 40%; color: #1e293b !important;">Owner Full Name:</td><td style="padding: 10px; color: #1e293b !important;" id="pdf-v-owner"></td></tr>
+                <tr><td style="padding: 10px; font-weight: 600; color: #1e293b !important;">Pet Name:</td><td style="padding: 10px; color: #1e293b !important;" id="pdf-v-pet"></td></tr>
+                <tr style="background-color: #f8fafc;"><td style="padding: 10px; font-weight: 600; color: #1e293b !important;">Pet Age:</td><td style="padding: 10px; color: #1e293b !important;" id="pdf-v-age"></td></tr>
             </table>
 
-            <h2 style="font-size: 18px; color: #0ea5e9; margin-bottom: 15px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">2. Funnel Filter & Service Matching</h2>
-            <table style="width: 100%; border-collapse: collapse; margin-bottom: 35px; font-size: 14px;">
-                <tr style="background-color: #f8fafc;"><td style="padding: 12px; font-weight: 600; width: 40%;">Selected Species:</td><td style="padding: 12px;" id="pdf-v-species"></td></tr>
-                <tr><td style="padding: 12px; font-weight: 600;">Coat Category:</td><td style="padding: 12px;" id="pdf-v-coat"></td></tr>
-                <tr style="background-color: #f8fafc;"><td style="padding: 12px; font-weight: 600;">Identified Breed:</td><td style="padding: 12px; font-weight: 700; color: #0284c7;" id="pdf-v-breed"></td></tr>
-                <tr><td style="padding: 12px; font-weight: 600;">Custom Treatment Menu:</td><td style="padding: 12px;" id="pdf-v-service"></td></tr>
-                <tr style="background-color: #f0f9ff; color: #0369a1; border-top: 2px solid #bae6fd;"><td style="padding: 12px; font-weight: 700;">Exact Style Goal Reference:</td><td style="padding: 12px; font-weight: 700;" id="pdf-v-photo-final"></td></tr>
+            <!-- Section 2 -->
+            <h2 style="font-size: 16px; color: #0ea5e9 !important; margin-top: 20px; margin-bottom: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; font-weight: 600;">2. Funnel Filter & Service Matching</h2>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 13px; color: #1e293b !important;">
+                <tr style="background-color: #f8fafc;"><td style="padding: 10px; font-weight: 600; width: 40%; color: #1e293b !important;">Selected Species:</td><td style="padding: 10px; color: #1e293b !important;" id="pdf-v-species"></td></tr>
+                <tr><td style="padding: 10px; font-weight: 600; color: #1e293b !important;">Coat Category:</td><td style="padding: 10px; color: #1e293b !important;" id="pdf-v-coat"></td></tr>
+                <tr style="background-color: #f8fafc;"><td style="padding: 10px; font-weight: 600; color: #0284c7 !important;">Identified Breed:</td><td style="padding: 10px; font-weight: 700; color: #0284c7 !important;" id="pdf-v-breed"></td></tr>
+                <tr><td style="padding: 10px; font-weight: 600; color: #1e293b !important;">Custom Treatment Menu:</td><td style="padding: 10px; color: #1e293b !important;" id="pdf-v-service"></td></tr>
+                <tr style="background-color: #e0f2fe; color: #0369a1 !important; border-top: 2px solid #bae6fd;"><td style="padding: 10px; font-weight: 700; color: #0369a1 !important;">Exact Style Goal Reference:</td><td style="padding: 10px; font-weight: 700; color: #0369a1 !important;" id="pdf-v-photo-final"></td></tr>
             </table>
 
-            <div style="background-color: #f0f9ff; border: 1px dashed #bae6fd; padding: 20px; border-radius: 12px; text-align: center; font-size: 12px; color: #0369a1; line-height: 1.5; margin-top: 40px;">
+            <!-- Footer Note -->
+            <div style="background-color: #f0f9ff; border: 1px dashed #bae6fd; padding: 15px; border-radius: 8px; text-align: center; font-size: 11px; color: #0369a1 !important; line-height: 1.4; margin-top: 30px;">
                 This manifest voucher contains dynamic options filtered explicitly for the pet's anatomical metrics. Please preserve this record local to your workspace.
             </div>
         </div>

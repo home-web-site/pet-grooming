@@ -15,7 +15,7 @@
 
     <script>
         // ==========================================================================
-        // 1. GLOBAL DATABASES & CONFIGURATION
+        // 1. GLOBAL DATABASES & CONFIGURATION (Con tus nuevas URLs de imágenes)
         // ==========================================================================
         const misImagenesPorRaza = {
             "Poodle": {
@@ -179,8 +179,14 @@
 
         function navigateStep(from, to) {
             if (from === 1) {
-                if (!document.getElementById('ownerName').value || !document.getElementById('petName').value || !document.getElementById('petAge').value) {
-                    alert('Please complete all Identity fields.'); return;
+                // Validación robustecida incluyendo los nuevos campos obligatorios
+                if (!document.getElementById('ownerName').value || 
+                    !document.getElementById('ownerPhone').value || 
+                    !document.getElementById('ownerEmail').value || 
+                    !document.getElementById('ownerAddress').value || 
+                    !document.getElementById('petName').value || 
+                    !document.getElementById('petAge').value) {
+                    alert('Please complete all Identity and Contact fields.'); return;
                 }
             }
             if (from === 3) {
@@ -204,10 +210,16 @@
                  alert('Please select a reference photo style option.'); return;
             }
 
-            // Mapeo dinámico de datos al voucher
+            // Mapeo dinámico de datos al voucher (Incluidos los nuevos campos)
             document.getElementById('pdf-v-owner').innerText = o;
+            document.getElementById('pdf-v-phone').innerText = document.getElementById('ownerPhone').value;
+            document.getElementById('pdf-v-email').innerText = document.getElementById('ownerEmail').value;
+            document.getElementById('pdf-v-address').innerText = document.getElementById('ownerAddress').value;
+            
             document.getElementById('pdf-v-pet').innerText = p;
             document.getElementById('pdf-v-age').innerText = document.getElementById('petAge').value;
+            document.getElementById('pdf-v-vaccines').innerText = document.getElementById('petVaccines').value;
+            
             document.getElementById('pdf-v-breed').innerText = document.getElementById('petBreed').value;
             document.getElementById('pdf-v-species').innerText = document.querySelector('input[name="species"]:checked').value;
             document.getElementById('pdf-v-coat').innerText = document.querySelector('input[name="coat"]:checked').value;
@@ -305,6 +317,25 @@
                         <label>Owner Full Name</label>
                         <input type="text" id="ownerName" placeholder="e.g. Alex Smith" required>
                     </div>
+                    
+                    <!-- NUEVO: Teléfono -->
+                    <div class="input-field">
+                        <label>Owner Phone Number</label>
+                        <input type="tel" id="ownerPhone" placeholder="e.g. +1 872 214 5944" required>
+                    </div>
+
+                    <!-- NUEVO: Correo Electrónico -->
+                    <div class="input-field">
+                        <label>Owner Email Address</label>
+                        <input type="email" id="ownerEmail" placeholder="e.g. alexsmith@domain.com" required>
+                    </div>
+
+                    <!-- NUEVO: Dirección -->
+                    <div class="input-field">
+                        <label>Home Address</label>
+                        <input type="text" id="ownerAddress" placeholder="e.g. 123 Luxury Lane, Apt 4B" required>
+                    </div>
+
                     <div class="input-field">
                         <label>Pet Name</label>
                         <input type="text" id="petName" placeholder="e.g. Max" required>
@@ -313,6 +344,17 @@
                         <label>Pet Age</label>
                         <input type="text" id="petAge" placeholder="e.g. 2 years" required>
                     </div>
+
+                    <!-- NUEVO: Estado de Vacunación -->
+                    <div class="input-field">
+                        <label>Pet Vaccination Status</label>
+                        <select id="petVaccines">
+                            <option value="Fully Up to Date">Up to Date 💉</option>
+                            <option value="Incomplete / Missing Boosters">Incomplete Schedule ⚠️</option>
+                            <option value="Not Vaccinated">Not Vaccinated ❌</option>
+                        </select>
+                    </div>
+
                     <button type="button" class="btn-glow-action" onclick="navigateStep(1, 2)">Continue ➜</button>
                 </div>
 
@@ -383,7 +425,7 @@
         </section>
     </main>
 
-    <!-- EL NUEVO CONTENEDOR SEGURO: Utiliza position fixed fuera de pantalla para que el canvas lo dibuje con sus medidas naturales -->
+    <!-- COMPROBANTE OCULTO: Estructurado para recibir todos los datos nuevos e imprimirlos limpiamente -->
     <div id="pdf-output-template" style="position: fixed; left: -9999px; top: 0; width: 700px; background: #ffffff !important; color: #1e293b !important; box-sizing: border-box;">
         <div style="padding: 40px; font-family: 'Poppins', sans-serif; background: #ffffff !important; color: #1e293b !important;">
             
@@ -400,12 +442,28 @@
                     <td style="padding: 12px; color: #1e293b !important; border: 1px solid #e2e8f0;" id="pdf-v-owner"></td>
                 </tr>
                 <tr>
+                    <td style="padding: 12px; font-weight: 600; color: #1e293b !important; border: 1px solid #e2e8f0;">Owner Phone:</td>
+                    <td style="padding: 12px; color: #1e293b !important; border: 1px solid #e2e8f0;" id="pdf-v-phone"></td>
+                </tr>
+                <tr style="background-color: #f8fafc !important;">
+                    <td style="padding: 12px; font-weight: 600; color: #1e293b !important; border: 1px solid #e2e8f0;">Owner Email:</td>
+                    <td style="padding: 12px; color: #1e293b !important; border: 1px solid #e2e8f0;" id="pdf-v-email"></td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; font-weight: 600; color: #1e293b !important; border: 1px solid #e2e8f0;">Home Address:</td>
+                    <td style="padding: 12px; color: #1e293b !important; border: 1px solid #e2e8f0;" id="pdf-v-address"></td>
+                </tr>
+                <tr style="background-color: #f8fafc !important;">
                     <td style="padding: 12px; font-weight: 600; color: #1e293b !important; border: 1px solid #e2e8f0;">Pet Name:</td>
                     <td style="padding: 12px; color: #1e293b !important; border: 1px solid #e2e8f0;" id="pdf-v-pet"></td>
                 </tr>
-                <tr style="background-color: #f8fafc !important;">
+                <tr>
                     <td style="padding: 12px; font-weight: 600; color: #1e293b !important; border: 1px solid #e2e8f0;">Pet Age:</td>
                     <td style="padding: 12px; color: #1e293b !important; border: 1px solid #e2e8f0;" id="pdf-v-age"></td>
+                </tr>
+                <tr style="background-color: #f8fafc !important;">
+                    <td style="padding: 12px; font-weight: 600; color: #1e293b !important; border: 1px solid #e2e8f0;">Vaccination Status:</td>
+                    <td style="padding: 12px; color: #1e293b !important; border: 1px solid #e2e8f0;" id="pdf-v-vaccines"></td>
                 </tr>
             </table>
 
